@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Stack } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +15,33 @@ export default function ProfileInformation(props: any) {
     const history = useHistory();
     const { id } = useParams();
     const [showEditButton, setShowEditButton] = React.useState(false);
+
+    let buttonName = "Follow user";
+    const [follow, setButton] = useState(buttonName);
+    let toggleButton:boolean = true;
+
+
+
+    function toggleFollowButton() {
+        if (toggleButton === true){
+            toggleButton = false;
+            buttonName = "Unfollow user"
+            setButton(buttonName);
+            
+        } else 
+        {
+            toggleButton = true;
+            buttonName = "follow user"
+            setButton(buttonName);
+        }
+    }
+
+    // useEffect(() => 
+    // {toggleFollowButton(() => {
+    //     setButton(follow) =>
+    // })}
+
+
     
     useEffect(() => {
         setDoneLoading(false);
@@ -45,6 +72,11 @@ export default function ProfileInformation(props: any) {
             <br />
             <Card.Body id="profileBody">
                 <Card.Title id = "ProfileName">{profile.first_name} {profile.last_name}</Card.Title>
+                <button type="button" onClick={() =>toggleFollowButton()} > {follow} </button>
+                <br></br>
+                <text>followers: </text>
+                <br></br>
+                <text>following: </text>
                 <br /><br />
                 <Card.Text id="AboutMe">
                     <h5>About Me</h5>
