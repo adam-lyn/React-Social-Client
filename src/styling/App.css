@@ -273,7 +273,7 @@ h3 {
 
 #ProfilePage {
     width: 1000px;
-    height: 900px;
+    height: 800px;
     margin: 1rem;
     padding: 2rem;
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
@@ -332,9 +332,9 @@ h3 {
     height: 175px;
     width: 175px;
     object-fit: cover;
-    position: absolute;
+    position: flex;
     top: 30%;
-    left: 40%;
+    margin: auto;
     z-index: 2;
 }
 
