@@ -43,7 +43,7 @@ function checkEmbed(embedURL: string) {
 
 
 function SubmitPost(props: any) {
-
+    let showEmbed = 'hidden';
     const closeSubmit = () => {
         if (props.post.postText != "") {
             let cType = checkEmbed(props.post.contentLink);
@@ -68,6 +68,15 @@ function SubmitPost(props: any) {
         }
     }
 
+    const toggleHide = () => {
+        if (showEmbed == 'hidden'){
+            showEmbed = '';
+        }
+        else showEmbed = 'hidden';
+
+        console.log(showEmbed);
+    }
+
     return (
         <Modal
             {...props}
@@ -83,17 +92,6 @@ function SubmitPost(props: any) {
             </Modal.Header>
             <Modal.Body>
                 <Form>
-                    {/* Picture Input */}
-                    <Form.Group as={Row} className="mb-3">
-                        <Col sm={11}>
-                            {/* Next line sets the text that sits in the input. Line after sets the imageURL*/}
-                            <Form.Control
-                                placeholder="Image or Video Embed URL"
-                                onChange={(event) => {
-                                    props.setPost({ ...props.post, contentLink: event.target.value })} 
-                                }/>
-                        </Col>
-                    </Form.Group>
 
                     {/* Text Input */}
                     <Form.Group as={Row} className="mb-3">
@@ -111,9 +109,27 @@ function SubmitPost(props: any) {
                             />
                         </Col>
                     </Form.Group>
+
+                    {/* Picture Input */}
+                    <Form.Group as={Row} className="mb-3">
+                        <Col sm={12}>
+                            {/* Next line sets the text that sits in the input. Line after sets the imageURL*/}
+                            <Form.Control
+                                placeholder="Image or Video Embed URL"
+                                onChange={(event) => {
+                                    props.setPost({ ...props.post, contentLink: event.target.value })} 
+                                }/>
+                            
+                        </Col>
+                    </Form.Group>
+                    
+
                 </Form>
             </Modal.Body>
             <Modal.Footer>
+                {/* Show/Hide Attatchment Button */}
+                <Button id = "embedButton" type = "button" onClick={() => toggleHide() }>Add Embed</Button>
+                
                 {/* Submit Button */}
                 <Button data-testid="submitPostButton" id="submitPostBtn" type="button" onClick={() => closeSubmit()}>Post to Reverb</Button>
             </Modal.Footer>
