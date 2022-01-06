@@ -3,23 +3,20 @@ import { useEffect, useState } from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { getProfileAsync, selectProfile, updateProfileAsync } from './profileSlice';
 import './EditProfile.css';
+import { getProfileAsync, selectProfile, updateProfileAsync } from './profileSlice';
 
 export let util = { update: (e: any) => { }, cancel: (e: any) => { } };
 
 export default function EditProfile() {
+    const [cjsFile, setcjsFile] = useState("");
     useEffect(() => {
         dispatch(getProfileAsync(profile));
     }, []);
 
     const profile = useSelector(selectProfile);
     const dispatch = useDispatch();
-
     const history = useHistory();
-
-
-
     const [input, setInput] = useState(profile);
 
     const handleChange = (e: any) => {
@@ -29,9 +26,9 @@ export default function EditProfile() {
         });
     };
 
-
     util.update = (e: any) => {
-        e.preventDefault();
+
+       e.preventDefault();
         // console.log('editProfile' + JSON.stringify(input));
         dispatch(updateProfileAsync(input));
         history.push('/profile');
@@ -42,7 +39,12 @@ export default function EditProfile() {
         history.push('/profile');
     }
 
-    return (
+    const handleChangeFile = (event:any)=> {
+        const file = event.target.files[0];
+        setcjsFile(file);
+      }
+
+      return (
         <div>
             <Grid container direction="column" alignItems="center" justify="center">
                 <Card id="EditProfile">
@@ -50,56 +52,55 @@ export default function EditProfile() {
                         <Row>
                             <Col id="editCol1">
                                 <div className="form_input-group">
-                                    <label htmlFor="first_name">First Name</label>
+                                    <label htmlFor="firstName">First Name</label>
 
-                                    <input className="form_input" type="text" name="first_name" placeholder="First name" value={input.first_name}
-
+                                    <input className="form_input" type="text" name="firstName" placeholder="First name" value={input.firstName}
                                         onChange={handleChange} required />
                                 </div>
 
                                 <div className="form_input-group">
-                                    <label htmlFor="last_name">Last Name</label>
+                                    <label htmlFor="lastName">Last Name</label>
 
-                                    <input className="form_input" type="textbox" name="last_name" placeholder="Last name" value={input.last_name}
+                                    <input className="form_input" type="textbox" name="lastName" placeholder="Last name" value={input.lastName}
                                         onChange={handleChange} required />
                                 </div>
 
                                 <div className="form_input-group">
-                                    <label htmlFor="about_me">About Me</label>
-                                    <textarea className="form_input" rows={10} name="about_me" placeholder="Your about me" value={input.about_me}
+                                    <label htmlFor="aboutMe">About Me</label>
+                                    <textarea className="form_input" rows={10} name="aboutMe" placeholder="Your about me" value={input.aboutMe}
                                         onChange={handleChange}  > </textarea>
                                 </div>
                             </Col>
                             <Col id="editCol2">
                                 <div className="form_input-group">
-                                    <label htmlFor="last_name">Birthday</label>
+                                    <label htmlFor="lastName">Birthday</label>
                                     <input className="form_input" type="textbox" name="birthday" placeholder="Birthday" value={input.birthday}
 
                                         onChange={handleChange} required />
                                 </div>
 
                                 <div className="form_input-group">
-                                    <label htmlFor="last_name">Hobbies</label>
+                                    <label htmlFor="lastName">Hobbies</label>
                                     <input className="form_input" type="textbox" name="hobby" placeholder="Hobby" value={input.hobby}
                                         onChange={handleChange} required />
                                 </div>
 
                                 <div className="form_input-group">
-                                    <label htmlFor="last_name">Location</label>
+                                    <label htmlFor="lastName">Location</label>
                                     <input className="form_input" type="textbox" name="location" placeholder="Location" value={input.location}
                                         onChange={handleChange} required />
                                 </div>
 
                                 <div className="form_input-group">
-                                    <label htmlFor="profile_img">Select Profile Image</label>
-                                    <input className="form_input" type="text" name="profile_img" placeholder="Profile Image url" value={input.profile_img}
+                                    <label htmlFor="profileImg">Select Profile Image</label>
+                                    <input className="form_input" type="text" name="profileImg" placeholder="Profile Image url" value={input.profileImg}
                                         onChange={handleChange} required />
                                 </div>
 
                                 <div className="form_input-group">
-                                    <label htmlFor="header_img">Select Header Image</label>
-                                    <input className="form_input" type="text" name="header_img" placeholder="Header Image url" value={input.header_img}
-                                        onChange={handleChange} required />
+                                    <label htmlFor="headerImg">Select Header Image</label>
+                                    <input className="form_input" type="file" name="headerImg" placeholder="Header Image url" value={input.headerImg}
+                                        onChange={(e) => handleChangeFile(e)}  required />
                                 </div>
                                 <br /><br />
                             </Col>

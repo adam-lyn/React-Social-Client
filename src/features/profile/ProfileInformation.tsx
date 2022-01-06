@@ -30,12 +30,12 @@ export default function ProfileInformation(props: any) {
             })
         }
       }, [props.beep]); // beep beep :^)
-      console.log("profile.profile_img") ;
-      if(profile.profile_img == ""){
-        // profile.profile_img = "https://cdn3.iconfinder.com/data/icons/materia-human/24/013_042_newborn_infant_child_baby-512.png";
+    //   console.log("profile.profileImg") ;
+      if(profile.profileImg == ""){
+        // profile.profileImg = "https://cdn3.iconfinder.com/data/icons/materia-human/24/013_042_newborn_infant_child_baby-512.png";
       }
-      console.log(profile.profile_img) ;
-      console.log("profile.profile_img---2") ;
+    //   console.log(profile.profileImg) ;
+    //   console.log("profile.profileImg---2") ;
     const goToEditProfile = () => {
         history.push("/editProfile");
     }
@@ -44,16 +44,16 @@ export default function ProfileInformation(props: any) {
         <Grid container direction="column" alignItems="center" justify="center">
         <Card id="ProfilePage">
             <Stack >
-                <Card.Img src={profile.profile_img} id="ProfileImg" />
-                <Card.Img src={profile.header_img} id="HeaderImg" />
+                <Card.Img src={profile.profileImg} id="ProfileImg" />
+                <Card.Img src={profile.headerImg} id="HeaderImg" />
                 <Upload_Picture></Upload_Picture>
             </Stack>
             <Card.Body id="profileBody">
-                <Card.Title id = "ProfileName">{profile.first_name} {profile.last_name}</Card.Title>
+                <Card.Title id = "ProfileName">{profile.firstName} {profile.lastName}</Card.Title>
                 <br />
                 <Card.Text id="AboutMe">
                     <h5>About Me</h5>
-                    {profile.about_me}
+                    {profile.aboutMe}
                 </Card.Text>
                 <br />
                 <Card.Text id="AboutMe">

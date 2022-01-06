@@ -13,11 +13,11 @@ describe('Post testing', () => {
 
     const aProfile: Profile = {
       id: 0,
-      first_name: '',
-      last_name: '',
-      profile_img: '',
-      header_img: '',
-      about_me: '',
+      firstName: '',
+      lastName: '',
+      profileImg: '',
+      headerImg: '',
+      aboutMe: '',
       birthday: '',
       hobby: '',
       location: ''

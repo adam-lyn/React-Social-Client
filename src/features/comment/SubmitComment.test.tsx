@@ -16,14 +16,14 @@ describe('SubmitComment testing', () => {
       date: "",
       profile: {
         id: 0,
-        first_name: "",
-        last_name: "",
+        firstName: "",
+        lastName: "",
         birthday: "",
         hobby: "",
         location: "",
-        profile_img: "",
-        header_img: "",
-        about_me: ""
+        profileImg: "",
+        headerImg: "",
+        aboutMe: ""
       }
     }
 

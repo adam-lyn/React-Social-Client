@@ -51,7 +51,7 @@ const PostComponent = ({ shouldUpdateLikes, post, leaveComment }:
             <Card.Header>
                 
                 {/* TODO: Make a link here that calls the API using the author's id to get their profile and then redirect to it*/}
-                {/*<Card.Subtitle id="cardSubtitle"><Link to={`profile/${post.profile.id}`}>{"" + post.profile.first_name} {"" + post.profile.last_name}</Link></Card.Subtitle>*/}
+                {/*<Card.Subtitle id="cardSubtitle"><Link to={`profile/${post.profile.id}`}>{"" + post.profile.firstName} {"" + post.profile.lastName}</Link></Card.Subtitle>*/}
                 <Card.Text>{"" + new Date(post.date + 'Z').toLocaleString() }</Card.Text>
                 <Button data-testid="reverbButton" id="reverbButton" onClick={() => likePostFunc()} variant="warning"
                     style={{ float: 'right', marginTop: "-2rem" }} disabled={!canLike}>{likes}<img id="reverbIcon" src={ReverbIcon} alt="Click to Reverb!"/></Button>
@@ -71,7 +71,7 @@ const PostComponent = ({ shouldUpdateLikes, post, leaveComment }:
                     <ListGroupItem>
                         {comment.commentText}
                         <footer id="commentFooter" style={{ float: "right", fontSize: "0.8rem", marginTop: "0.8rem" }}>
-                            <Link to={`profile/${comment.profile.id}`}>{comment.profile.first_name} {comment.profile.last_name}</Link> | {comment.date}
+                            <Link to={`profile/${comment.profile.id}`}>{comment.profile.firstName} {comment.profile.lastName}</Link> | {comment.date}
                         </footer>
                     </ListGroupItem>
                 ))}

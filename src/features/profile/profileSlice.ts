@@ -8,14 +8,14 @@ export type ProfileState = Profile;
 
 const initialState: ProfileState = {
     id: 0,
-    first_name: "",
-    last_name: "",
+    firstName: "",
+    lastName: "",
     birthday: "",
     hobby: "",
     location: "",
-    profile_img: "",
-    header_img: "",
-    about_me: ""
+    profileImg: "",
+    headerImg: "",
+    aboutMe: ""
 }
 
 export const getProfileAsync = createAsyncThunk<Profile, object>(
@@ -86,7 +86,7 @@ const profileSlice = createSlice( {
             } )
             .addCase( getProfileByIdAsync.fulfilled, ( state, action ) =>
             {
-                // console.log(action.payload.first_name);
+                // console.log(action.payload.firstName);
                 return action.payload;
             } )
             .addCase( getProfileByIdAsync.rejected, ( state, action ) =>
