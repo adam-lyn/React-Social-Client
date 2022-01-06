@@ -52,11 +52,16 @@ function SubmitPost(props: any) {
             let cType = checkEmbed(props.post.contentLink);
             props.post.contentType = cType;
 
+            if (props.post.contentLink && props.post.contentType == null){
+                swal("Invalid content link!", "Make sure images end with a proper format type or that videos are youtube links.", "error");
+            }
+            else{
+                props.onHide();
+                props.dispatchPost();
+            }
 
-            props.onHide();
-            props.dispatchPost();
         } else {
-            swal("", "Posts must have a body!", "error");
+            swal("Missing body!", "Posts must have a body.", "error");
         }
     }
 
