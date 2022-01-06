@@ -43,7 +43,7 @@ function checkEmbed(embedURL: string) {
 
 
 function SubmitPost(props: any) {
-    let showEmbed = 'hidden';
+    const [showEmbed, setShowEmbed] = React.useState(true);
     const closeSubmit = () => {
         if (props.post.postText != "") {
             let cType = checkEmbed(props.post.contentLink);
@@ -67,14 +67,10 @@ function SubmitPost(props: any) {
             swal("Missing body!", "Posts must have a body.", "error");
         }
     }
-
+    
     const toggleHide = () => {
-        if (showEmbed == 'hidden'){
-            showEmbed = '';
-        }
-        else showEmbed = 'hidden';
-
-        console.log(showEmbed);
+        setShowEmbed(!showEmbed);
+            
     }
 
     return (
@@ -115,6 +111,7 @@ function SubmitPost(props: any) {
                         <Col sm={12}>
                             {/* Next line sets the text that sits in the input. Line after sets the imageURL*/}
                             <Form.Control
+                                hidden={showEmbed}
                                 placeholder="Image or Video Embed URL"
                                 onChange={(event) => {
                                     props.setPost({ ...props.post, contentLink: event.target.value })} 
