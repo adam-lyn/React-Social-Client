@@ -32,11 +32,10 @@ function switchTheme () {
   const loggedIn = useAppSelector(state => state.auth[0].token);
   return (
     <div className="App" data-theme={theme}>
+      <Navbar loggedIn={loggedIn} />
       <Stack direction="horizontal" gap={5}>
-        <Navbar loggedIn={loggedIn}/>
-        <div className="justify-content-center" style={{width:"100%", height:"100vh", overflowY:"scroll"}} >
+        <div className="justify-content-center" style={{width:"100%"}} >
           <MainRouter loggedIn={loggedIn}/>
-         
         </div>
       </Stack>
     </div>

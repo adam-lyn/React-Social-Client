@@ -6,9 +6,10 @@ export default function ProfilePage(props: any) {
 
     return(
         <>
-        <Row>
+        {//<Row>
             <ProfileInformation beep={props.beep}/>
-        </Row>
+        //</></Row>
+        }
         </>
     )
 }

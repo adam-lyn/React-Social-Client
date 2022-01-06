@@ -104,6 +104,11 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ loggedIn }: { loggedIn: s
                             Profile
                         </Nav.Link>
 
+                        <Nav.Link as={Link} to={"/createGroup"} onClick ={() => history.push("/createGroup")}
+                            className="justify-content-center" id="profileLink" eventKey="group-link">
+                            Group
+                        </Nav.Link>
+
                         <NavLink as={Link} to={"/logout"}
                             id="logoutLink"
                             eventKey="logout-link"
@@ -123,7 +128,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ loggedIn }: { loggedIn: s
     }
 
     return (
-        <div>
+        <div style={{position:"sticky", top:"0"}}>
             {sideNavBar}
         </div>
     )

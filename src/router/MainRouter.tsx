@@ -8,6 +8,8 @@ import { useAppDispatch } from "../app/hooks";
 import { logout } from '../features/login/authSlice'
 import ProfilePage from "../features/profile/ProfilePage";
 import EditProfilePage from "../features/profile/EditProfilePage";
+import GroupPage from "../features/group/GroupPage";
+import { CreateGroupPage } from "../features/group/CreateGroupPage";
 
 
 interface MainRouterProps{
@@ -29,6 +31,9 @@ const MainRouter:React.FC<MainRouterProps> = ({loggedIn}:{loggedIn:string}) => {
     toReturn =
       <div>
         <Switch>
+          <Route path="/createGroup">
+            <CreateGroupPage/>
+          </Route>
           <Route path="/profile/:id">
             <ProfilePage beep={false}/>
           </Route>
@@ -43,6 +48,9 @@ const MainRouter:React.FC<MainRouterProps> = ({loggedIn}:{loggedIn:string}) => {
           </Route>
           <Route path="/">
             <Feed/>
+          </Route>
+          <Route path="/group/:name">
+            <GroupPage/>
           </Route>
         </Switch>
       </div>
