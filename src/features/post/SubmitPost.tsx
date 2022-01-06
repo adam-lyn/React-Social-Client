@@ -12,19 +12,16 @@ function checkEmbed(embedURL: string) {
     // If it's a proper url, it should have at least 2 values here. 
     if (urlMap.length >= 2){
         // Checks if there's a valid file type extension at the end
-        let end = urlMap[urlMap.length - 1] ;
-        let expectedFileTypes = new Map([['jpg','img'], ['jpeg', 'jpeg'], [ 'fjif', 'fjif'] , ['pjp', 'pjp'], ['gifv','gifv'], ['gif','gif'],['png','png']]);
+        const regExp = /.*\.(jpg|JPG|gif|GIF|jpeg|fjif|pjp|gifv|gif|png)/g;
+        const match = embedURL.match(regExp);
+        console.log(match);
 
         // If it's a valid file type, we just return that it's an img
-        if (expectedFileTypes.get(end) != undefined){
+        if (match){
             return "IMG";
         }
         else {
             try {
-                // Split with the slash makes sure that it's a youtube link by trying to save the fourth position which should always exist in a youtube link.
-                let ytMap = embedURL.split("/");
-                end = ytMap[3];
-                
                 // Use our function to get the video code from the entire URL
                 let vCode = formatYT(embedURL);
                 
@@ -50,6 +47,12 @@ function SubmitPost(props: any) {
     const closeSubmit = () => {
         if (props.post.postText != "") {
             let cType = checkEmbed(props.post.contentLink);
+
+            if (cType == 'IMG') {
+                const regExp = /.*\.(jpg|JPG|gif|GIF|jpeg|fjif|pjp|gifv|gif|png)/g;
+                props.post.contentLink = props.post.contentLink.match(regExp)[0];
+            }
+
             props.post.contentType = cType;
 
             if (props.post.contentLink && props.post.contentType == null){
