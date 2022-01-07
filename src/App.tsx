@@ -10,24 +10,6 @@ import { useAppSelector } from './app/hooks';
 const App = () => {
 
   //const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-const [theme, setTheme] = useState('light');
-
-
-function switchTheme () {
-  console.log("SwitchTheme Invoked")
-  console.log(theme);
-  let newTheme;
-  if (theme == 'light'){
-    newTheme = 'dark';
-  }
-  else{
-    newTheme = 'light';
-  }
-  console.log(theme);
-  setTheme(newTheme);
-  console.log(theme);
-  //<button onClick={() => switchTheme()}>ThemeSwitcher</button>
-}
 
   const loggedIn = useAppSelector(state => state.auth[0].token);
   return (
