@@ -7,6 +7,7 @@ import { getProfileAsync, getProfileByIdAsync, selectProfile } from "./profileSl
 import { checkProfileOwnership } from "./profile.api";
 import Image from 'react-bootstrap/Image'
 import { reverbClientWithAuth } from "../../remote/reverb-api/reverbClient";
+import Upload_Picture from './UploadPicture';
 
 
 export default function ProfileInformation(props: any) {
@@ -68,6 +69,8 @@ export default function ProfileInformation(props: any) {
                 <Card.Img src={profile.profile_img} id="ProfileImg" />
                 <Card.Img src={profile.header_img} id="HeaderImg" />
             </Stack>
+            <br />
+                                    <Upload_Picture picCate="profile"/>
             <Card.Body id="profileBody">
                 <Card.Title id = "ProfileName">{profile.first_name} {profile.last_name}</Card.Title>
                 

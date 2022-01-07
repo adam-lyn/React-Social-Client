@@ -21,3 +21,10 @@ export const initialProfile: Profile = {
     header_img: "",
     about_me: ""
 }
+
+export interface FileInfo {
+    profileId: string,
+    picCate: string,
+    picurl: string,
+}
+

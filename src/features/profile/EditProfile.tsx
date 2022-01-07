@@ -15,11 +15,7 @@ export default function EditProfile() {
 
     const profile = useSelector(selectProfile);
     const dispatch = useDispatch();
-
     const history = useHistory();
-
-
-
     const [input, setInput] = useState(profile);
 
     const handleChange = (e: any) => {
@@ -28,7 +24,6 @@ export default function EditProfile() {
             [e.target.name]: e.target.value
         });
     };
-
 
     util.update = (e: any) => {
         e.preventDefault();
@@ -90,16 +85,19 @@ export default function EditProfile() {
                                         onChange={handleChange} required />
                                 </div>
 
-                                <div className="form_input-group">
-                                    <br />
-                                    <Upload_Picture></Upload_Picture>
-                                </div>
-
                                 {/* <div className="form_input-group">
+                                    <br />
+                                    <Upload_Picture picCate="profile"/>
+                                    <br />
+                                    <Upload_Picture picCate="header"/>
+                                    <br />
+                                </div> */}
+
+                                <div className="form_input-group">
                                     <label htmlFor="header_img">Select Header Image</label>
                                     <input className="form_input" type="text" name="header_img" placeholder="Header Image url" value={input.header_img}
                                         onChange={handleChange} required />
-                                </div> */}
+                                </div>
                                 <br />
                             </Col>
                         </Row>
