@@ -93,13 +93,13 @@ export default function EditProfile() {
                                 <div className="form_input-group">
                                 <label htmlFor="profile_img">Select Profile Image</label>
                                     <div className='form_input'>
-                                        <Upload_Picture props="Profile Picture"/>
+                                        <Upload_Picture targetPicture="profile"/>
                                     </div>
                                 </div>
                                 <div className="form_input-group">
                                 <label htmlFor="header_img">Select Header Image</label>
                                     <div className='form_input'>
-                                        <Upload_Picture props="Header Picture"/>
+                                        <Upload_Picture targetPicture="header"/>
                                     </div>
                                 </div>
                                 <br />
