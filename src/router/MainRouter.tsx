@@ -10,6 +10,7 @@ import ProfilePage from "../features/profile/ProfilePage";
 import EditProfilePage from "../features/profile/EditProfilePage";
 import GroupPage from "../features/group/GroupPage";
 import { CreateGroupPage } from "../features/group/CreateGroupPage";
+import { EditGroupPage } from "../features/group/EditGroupPage"
 
 
 interface MainRouterProps{
@@ -31,9 +32,6 @@ const MainRouter:React.FC<MainRouterProps> = ({loggedIn}:{loggedIn:string}) => {
     toReturn =
       <div>
         <Switch>
-          <Route path="/createGroup">
-            <CreateGroupPage/>
-          </Route>
           <Route path="/profile/:id">
             <ProfilePage beep={false}/>
           </Route>
@@ -43,15 +41,22 @@ const MainRouter:React.FC<MainRouterProps> = ({loggedIn}:{loggedIn:string}) => {
           <Route path="/editProfile">
             <EditProfilePage/>
           </Route>
+          <Route path="/createGroup">
+            <CreateGroupPage/>
+          </Route>
+          <Route path="/group/:groupName">
+            <GroupPage/>
+          </Route>
+          <Route path="/editGroup">
+            <EditGroupPage/>
+          </Route>
           <Route path="/logout">
             {doLogout}
           </Route>
           <Route path="/">
             <Feed/>
           </Route>
-          <Route path="/group/:name">
-            <GroupPage/>
-          </Route>
+          
         </Switch>
       </div>
   }

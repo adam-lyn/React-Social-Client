@@ -1,19 +1,56 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Stack } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid } from "@material-ui/core";
 import Image from 'react-bootstrap/Image'
+import { getGroupByName } from "./Group.api";
+import { Group } from "./Group";
 
 export default function GroupInformation() {
 
-    const [doneLoading, setDoneLoading] = React.useState(false);
+    const [doneLoading, setDoneLoading] = useState(false);
     const history = useHistory();
-    const { name } = useParams();
-    const [showEditButton, setShowEditButton] = React.useState(false);
+    const { groupName } = useParams();
+    const [showEditButton, setShowEditButton] = useState(false);
+    const [groupInfo, setGroupInfo] = useState({} as Group);
+
+    function getGroupInformation(name: string | undefined) {
+        if(name) {
+           getGroupByName(name).then((data) => setGroupInfo(data)).then(() => setDoneLoading(true));
+        }
+    }
 
     
-    
 
-    return null;
+    useEffect(() => {
+        getGroupInformation(groupName);
+    }, [])
+
+    function goToEditGroup() {
+        history.push('/editGroup')
+    }
+
+    return(
+        doneLoading ? (
+        <Grid container direction="column" alignItems="center" justify="center">
+        <Card id="ProfilePage">
+            <Stack >
+                <Card.Img src={groupInfo.profilePic} id="ProfileImg" />
+                <Card.Img src={groupInfo.headerImg} id="HeaderImg" />
+            </Stack>
+            <br />
+            <Card.Body id="profileBody">
+                <Card.Title id = "ProfileName">{groupInfo.name}</Card.Title>
+                <br /><br />
+                <Card.Text id="AboutMe">
+                    <h5>About Me</h5>
+                    {groupInfo.description}
+                </Card.Text>
+            </Card.Body>
+        </Card>
+        {showEditButton ? <Button id="EditProfileButton" onClick={goToEditGroup}>Edit Profile</Button> : <></>}
+        </Grid>) : (<Image id="LoadingImg" src = {"https://app.revature.com/assets/images/ajax-loader-logo.0cd555cc.gif"} 
+        style={{height:'192px', width: '300px'}} fluid data-testid="gif"/>)
+    )
 }

@@ -31,7 +31,7 @@ function switchTheme () {
 
   const loggedIn = useAppSelector(state => state.auth[0].token);
   return (
-    <div className="App" data-theme={theme}>
+    <div className="App">
       <Navbar loggedIn={loggedIn} />
       <Stack direction="horizontal" gap={5}>
         <div className="justify-content-center" style={{width:"100%"}} >
