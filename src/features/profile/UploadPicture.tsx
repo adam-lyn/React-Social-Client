@@ -1,20 +1,22 @@
+import { useSelector } from "react-redux";
 import React from "react";
+import {selectProfile} from "./profileSlice";
 import { reverbClientUploadFileWithAuth } from "../../remote/reverb-api/reverbClient";
 
-export default function Upload_Picture() {
-  const [firstName, setFirstName] = React.useState("");
+export default function Upload_Picture(targetPicture:any) {
   const [cjsFile, setcjsFile] = React.useState("");
-  const [cjsFile2, setcjsFile2] = React.useState("");
-  const submitForm = (event:any) => {
+  const profile = useSelector(selectProfile);
+  const submitForm = async (event:any) => {
     event.preventDefault();
     const dataArray = new FormData();
+    if (targetPicture=="Profile Picture"){dataArray.append('picCate',"profile");}
+    else{dataArray.append('picCate',"header");}
+    dataArray.append('profileId',profile.id);//need to fix
     dataArray.append('file', cjsFile);
-    dataArray.append('file2', cjsFile2);
-    dataArray.append("firstName", firstName);
-
     try{
-      reverbClientUploadFileWithAuth.post("/storage/uploadfile",dataArray);
-      console.log("Upload finished")
+      let resp= await reverbClientUploadFileWithAuth.post("/storage/test",dataArray);
+      console.log(resp.data.toString);
+      console.log("Upload finished");
     }
     catch{
       console.log("upload failed")
@@ -24,22 +26,11 @@ export default function Upload_Picture() {
     const file = event.target.files[0];
     setcjsFile(file);
   }
-  const handleChangeFile2 = (event:any)=> {
-    const file2 = event.target.files[0];
-    setcjsFile2(file2);
-  }
   return (
     <div>
       <form onSubmit={submitForm}>
-      <label htmlFor="last_name">Add/Change Profile Picture</label>
-        <div className="form_input">
           <input type="file" onChange={(e) => handleChangeFile(e)} />
-        </div>
-      <label htmlFor="last_name">Add/Change Header Picture</label>
-        <div className="form_input">
-          <input type="file" onChange={(e) => handleChangeFile2(e)} />
-        </div>
-        <input type="submit"/>
+          <input type="submit" value="upload"/>
       </form>
     </div>
   );

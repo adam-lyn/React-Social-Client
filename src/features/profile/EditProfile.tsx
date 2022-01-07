@@ -91,15 +91,17 @@ export default function EditProfile() {
                                 </div>
 
                                 <div className="form_input-group">
-                                    <br />
-                                    <Upload_Picture></Upload_Picture>
+                                <label htmlFor="profile_img">Select Profile Image</label>
+                                    <div className='form_input'>
+                                        <Upload_Picture props="Profile Picture"/>
+                                    </div>
                                 </div>
-
-                                {/* <div className="form_input-group">
-                                    <label htmlFor="header_img">Select Header Image</label>
-                                    <input className="form_input" type="text" name="header_img" placeholder="Header Image url" value={input.header_img}
-                                        onChange={handleChange} required />
-                                </div> */}
+                                <div className="form_input-group">
+                                <label htmlFor="header_img">Select Header Image</label>
+                                    <div className='form_input'>
+                                        <Upload_Picture props="Header Picture"/>
+                                    </div>
+                                </div>
                                 <br />
                             </Col>
                         </Row>
