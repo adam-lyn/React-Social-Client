@@ -1,12 +1,12 @@
-import { Profile } from "../profile/profile";
+import User from "../login/User";
 
 export interface Group {
 
-    owner : Profile
+    owner : User
     name : string
     description : string
     headerImg : string
     profilePic : string
-    joinedUsers : Profile[]
+    joinedUsers : User[]
 
 }

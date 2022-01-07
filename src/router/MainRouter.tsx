@@ -47,7 +47,7 @@ const MainRouter:React.FC<MainRouterProps> = ({loggedIn}:{loggedIn:string}) => {
           <Route path="/group/:groupName">
             <GroupPage/>
           </Route>
-          <Route path="/editGroup">
+          <Route path="/editGroup/:groupName">
             <EditGroupPage/>
           </Route>
           <Route path="/logout">
