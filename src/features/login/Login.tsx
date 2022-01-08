@@ -5,6 +5,7 @@ import { useAppDispatch } from '../../app/hooks'
 import { setTokenAsync } from './authSlice'
 import { reverbClientWithAuth } from '../../remote/reverb-api/reverbClient'
 import { setUserAsync } from './userSlice'
+import { getIdToken } from 'firebase/auth'
 
 export let util = {loginAccount: (event: any) => {}};
 
