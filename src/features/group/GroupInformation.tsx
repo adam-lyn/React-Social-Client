@@ -23,8 +23,6 @@ export default function GroupInformation() {
         }
     }
 
-    
-
     useEffect(() => {
         getGroupInformation(groupName);
     }, [])
@@ -44,25 +42,16 @@ export default function GroupInformation() {
             <br />
             <Card.Body id="profileBody">
                 <Card.Title id = "ProfileName">{groupInfo.name}</Card.Title>
-                <Card.Title id = "ProfileName">{groupInfo.owner === user}</Card.Title>
-                <Card.Title id = "ProfileName">{groupInfo.owner == user}</Card.Title>
-                <Card.Title id = "ProfileName">{groupInfo.owner.email}</Card.Title>
-                <Card.Title id = "ProfileName">{groupInfo.owner.id}</Card.Title>
-                <Card.Title id = "ProfileName">{user.email}</Card.Title>
-                <Card.Title id = "ProfileName">{user.id}</Card.Title>
-                {console.log(groupInfo)}
-                {console.log(user)}
-                {console.log(groupInfo.owner == user)}
                 <br /><br />
                 <Card.Text id="AboutMe">
-                    <h5>About Me</h5>
+                    <h5>Description</h5>
                     {groupInfo.description}
                 </Card.Text>
             </Card.Body>
         </Card>
-        <Feed />
         {groupInfo.owner.id === user.id && groupInfo.owner.email === user.email && <Button id="EditProfileButton" onClick={goToEditGroup}>Edit Profile</Button>}
-        </Grid>) : (<Image id="LoadingImg" src = {"https://app.revature.com/assets/images/ajax-loader-logo.0cd555cc.gif"} 
+        </Grid>)
+        : (<Image id="LoadingImg" src = {"https://app.revature.com/assets/images/ajax-loader-logo.0cd555cc.gif"} 
         style={{height:'192px', width: '300px'}} fluid data-testid="gif"/>)
 
     )
