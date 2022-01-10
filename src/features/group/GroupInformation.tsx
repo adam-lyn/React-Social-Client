@@ -6,14 +6,19 @@ import { Grid } from "@material-ui/core";
 import Image from 'react-bootstrap/Image'
 import { getGroupByName } from "./Group.api";
 import { Group } from "./Group";
+import { selectUser } from "../login/userSlice";
+import Feed from "../feed/Feed";
 
-export default function GroupInformation() {
+interface IGroupProp {
+    name: string | undefined
+}
+
+export default function GroupInformation(props: IGroupProp) {
 
     const [doneLoading, setDoneLoading] = useState(false);
     const history = useHistory();
-    const { groupName } = useParams();
-    const [showEditButton, setShowEditButton] = useState(false);
     const [groupInfo, setGroupInfo] = useState({} as Group);
+    const user = useSelector(selectUser);
 
     function getGroupInformation(name: string | undefined) {
         if(name) {
@@ -21,14 +26,12 @@ export default function GroupInformation() {
         }
     }
 
-    
-
     useEffect(() => {
-        getGroupInformation(groupName);
+        getGroupInformation(props.name);
     }, [])
 
     function goToEditGroup() {
-        history.push('/editGroup')
+        history.push(`/editGroup/${props.name}`);
     }
 
     return(
@@ -44,13 +47,15 @@ export default function GroupInformation() {
                 <Card.Title id = "ProfileName">{groupInfo.name}</Card.Title>
                 <br /><br />
                 <Card.Text id="AboutMe">
-                    <h5>About Me</h5>
+                    <h5>Description</h5>
                     {groupInfo.description}
                 </Card.Text>
             </Card.Body>
-        </Card>
-        {showEditButton ? <Button id="EditProfileButton" onClick={goToEditGroup}>Edit Profile</Button> : <></>}
-        </Grid>) : (<Image id="LoadingImg" src = {"https://app.revature.com/assets/images/ajax-loader-logo.0cd555cc.gif"} 
+        </Card> 
+        {groupInfo.owner.id === user.id && groupInfo.owner.email === user.email && <Button id="EditProfileButton" onClick={goToEditGroup}>Edit Profile</Button>}
+        </Grid>)
+        : (<Image id="LoadingImg" src = {"https://app.revature.com/assets/images/ajax-loader-logo.0cd555cc.gif"} 
         style={{height:'192px', width: '300px'}} fluid data-testid="gif"/>)
+
     )
 }

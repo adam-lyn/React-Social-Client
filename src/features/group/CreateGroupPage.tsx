@@ -12,9 +12,10 @@ export function CreateGroupPage() {
     const [groupDescription, setGroupDescription] = useState("");
 
     const handleChangeName = (e: any) => {
-        setGroupName(e.target.value);
+        setGroupName(e.target.value.trim());
     };
     
+    //TODO: do we want to trim description as well?
     const handleChangeDescription = (e: any) => {
         setGroupDescription(e.target.value);
     };

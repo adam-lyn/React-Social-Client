@@ -4,7 +4,7 @@ import UpdateGroupRequest from "./dtos/UpdateGroupRequest";
 import { Group } from "./Group";
 
 export const createGroup = async (newGroup: NewGroupRequest): Promise<Group> => {
-    const group = await reverbClientWithAuth.post<Group>('/api/group/', newGroup);
+    const group = await reverbClientWithAuth.post<Group>('/api/group/create', newGroup);
     
     if(group.status == 409) {
         throw group.data;
@@ -25,8 +25,8 @@ export const getGroupByName = async (groupName: string): Promise<Group> => {
     return group.data;
 }
 
-export const editGroup = async (updatedGroup: UpdateGroupRequest): Promise<Group> => {
-    const group = await reverbClientWithAuth.patch<Group>(`/api/group/update/${updatedGroup.name}`)
+export const editGroup = async (updatedGroup: UpdateGroupRequest, oldGroupName: string): Promise<Group> => {
+    const group = await reverbClientWithAuth.patch<Group>(`/api/group/update/${oldGroupName}`, updatedGroup);
 
     if(group.status == 403){
         throw group.data;

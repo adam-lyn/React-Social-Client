@@ -1,17 +1,19 @@
 import { Grid } from "@material-ui/core";
 import { useState } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { createGroup, editGroup } from "./Group.api";
 import UpdateGroupRequest from "./dtos/UpdateGroupRequest";
 
 export function EditGroupPage() {
 
     const history = useHistory();
-    const [groupName, setGroupName] = useState("");
+    const [newGroupName, setGroupName] = useState("");
     const [groupDescription, setGroupDescription] = useState("");
     const [groupProfilePic, setGroupProfilePic] = useState("");
     const [groupHeaderImg, setGroupHeaderImg] = useState("");
+    const { groupName } = useParams();
+    console.log(groupName);
 
     const handleChangeName = (e: any) => {
         setGroupName(e.target.value);
@@ -32,9 +34,8 @@ export function EditGroupPage() {
     const edit = (e: any) => {
         e.preventDefault();
         // console.log('editProfile' + JSON.stringify(input));
-        let payload: UpdateGroupRequest = {name: groupName, description: groupDescription, profilePic: groupProfilePic, headerImg: groupHeaderImg};
-        editGroup(payload);
-        history.push(`/group/${groupName}`);
+        let payload: UpdateGroupRequest = {name: newGroupName, description: groupDescription};
+        editGroup(payload, groupName as string).then(() => history.push(`/group/${newGroupName}`));
     }
 
     const cancel = (e: any) => {
