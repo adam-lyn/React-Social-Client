@@ -4,7 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfileAsync, getProfileByIdAsync, selectProfile } from "./profileSlice";
 import { checkProfileOwnership } from "./profile.api";
-import Image from 'react-bootstrap/Image'
+import Image from 'react-bootstrap/Image';
 import { canFollow, followUser, unfollowUser } from "../follow/followers.api";
 // import { updateProfile } from "firebase/auth";
 
@@ -32,7 +32,7 @@ export default function ProfileInformation(props: any) {
   function updateProfile() {
     if (id === undefined)
     {
-        setTimeout(() => dispatch(getProfileAsync(profile)), 100);
+      setTimeout(() => dispatch(getProfileAsync(profile)), 100);
     }
     else setTimeout(() => dispatch(getProfileByIdAsync(id)), 100);
   }
@@ -41,17 +41,15 @@ export default function ProfileInformation(props: any) {
   function toggleFollowButton() {
     if (toggleButton === true){
       setToggleButton(false);
-      followUser(profile.user_id).then( async () => {
-          updateProfile();
+      followUser(profile.user_id).then(async () => {
+        updateProfile();
       })
       parseFollowBtn();
-
     } else {
       setToggleButton(true);
       unfollowUser(profile.user_id).then(async () => {
-          updateProfile();
+        updateProfile();
       })
-
       parseFollowBtn();
     }
   }
@@ -60,9 +58,8 @@ export default function ProfileInformation(props: any) {
     if (toggleButton === true) {
       buttonName = "Follow";
       setButton(buttonName);
-    }
-    else {
-      buttonName = "Unfollow"
+    } else {
+      buttonName = "Unfollow";
       setButton(buttonName);
     }
   }
@@ -89,6 +86,7 @@ export default function ProfileInformation(props: any) {
   const goToEditProfile = () => {
     history.push("/editProfile");
   }
+
   return(
     doneLoading ? (
       <div>
@@ -130,5 +128,5 @@ export default function ProfileInformation(props: any) {
         fluid data-testid="gif"
       />
     )
-  )
+  );
 }
