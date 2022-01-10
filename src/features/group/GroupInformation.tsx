@@ -11,37 +11,17 @@ import Feed from "../feed/Feed";
 import { selectGroup, setGroupAsync } from "./groupSlice";
 import { useAppDispatch } from "../../app/hooks";
 
-interface IGroupProp {
-    name: string | undefined
-}
 
-export default function GroupInformation(props: IGroupProp) {
-
-    const [doneLoading, setDoneLoading] = useState(false);
+export default function GroupInformation() {
     const history = useHistory();
     const user = useSelector(selectUser);
     const group = useSelector(selectGroup);
-    const dispatch = useAppDispatch();
-
-    function getGroupInformation(name: string | undefined) {
-        if(name) {
-            dispatch(setGroupAsync(props.name as string))
-                .then(() => setDoneLoading(true))
-                .then(() => console.log("done creating groupInfo"));
-        }
-    }
-
-    useEffect(() => {
-        console.log("creating GroupInfo");
-        getGroupInformation(props.name);
-    }, [])
 
     function goToEditGroup() {
-        history.push(`/editGroup/${props.name}`);
+        history.push(`/editGroup/${group.name}`);
     }
 
     return(
-        doneLoading ? (
         <Grid container direction="column" alignItems="center" justify="center">
         <Card id="ProfilePage">
             <Stack >
@@ -59,9 +39,7 @@ export default function GroupInformation(props: IGroupProp) {
             </Card.Body>
         </Card> 
         {group.owner.id === user.id && group.owner.email === user.email && <Button id="EditProfileButton" onClick={goToEditGroup}>Edit Profile</Button>}
-        </Grid>)
-        : (<Image id="LoadingImg" src = {"https://app.revature.com/assets/images/ajax-loader-logo.0cd555cc.gif"} 
-        style={{height:'192px', width: '300px'}} fluid data-testid="gif"/>)
+        </Grid>
 
     )
 }

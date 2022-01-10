@@ -69,19 +69,12 @@ function Feed(props: {isGroup: boolean}) {
   }
 
   useEffect(() => {
-    console.log("Loading Feed")
     util.updateAll(props.isGroup);
     
-    setTimeout(() => {
-      let newPost: Post = post;
-      console.log("Assigning groupID");
-      newPost.groupID = group.groupID;
+    let newPost: Post = post;
+    if (props.isGroup) newPost.groupID = group.groupID;
 
-      console.log(group);
-
-      setPost(newPost);
-      console.log("Done loading feed")
-    }, 200)
+    setPost(newPost);
     
   }, [])
 

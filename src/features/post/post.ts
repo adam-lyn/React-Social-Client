@@ -10,7 +10,8 @@ export interface Post {
     date: Date | null,
     comments: Comment[],
     authorID: string,
-    groupID: string
+    groupID: string,
+    groupName: string
 }
 
 export const initialPost: Post = {
@@ -22,5 +23,6 @@ export const initialPost: Post = {
     date: null,
     comments: [],
     authorID: "",
-    groupID: ""
+    groupID: "",
+    groupName: ""
 }
