@@ -9,7 +9,8 @@ export interface Post {
     contentType: string,
     date: Date | null,
     comments: Comment[],
-    authorID: string
+    authorID: string,
+    groupID: string
 }
 
 export const initialPost: Post = {
@@ -20,5 +21,6 @@ export const initialPost: Post = {
     contentType:"",
     date: null,
     comments: [],
-    authorID: ""
+    authorID: "",
+    groupID: ""
 }

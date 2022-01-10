@@ -2,28 +2,27 @@ import React, { useEffect, useState } from 'react'
 import { Button, Container, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import SubmitPost from '../post/SubmitPost'
-import { getGroupPostsAsync, getPostsAsync, postPostAsync, selectPosts } from '../post/postSlice'
+import { getGroupPostsAsync, getPostsAsync, postGroupPostAsync, postPostAsync, selectPosts } from '../post/postSlice'
 import PostComponent from '../post/PostComponent'
 import SubmitComment from '../comment/SubmitComment';
 import { createComment } from '../comment/comment.api';
 import { initialPost } from '../post/post';
 import { initialComment } from '../comment/comment';
 import RefreshIcon from '../../assets/images/refreshicon.svg'
+import { selectGroup } from '../group/groupSlice';
+import { Post } from "../post/post"
 
 export let util = {
   updateAll: (isGroup: boolean) => { },
   leavePost: () => { },
   leaveComment: (npostId: number) => { },
   dispatchComment: () => { },
-  dispatchPost: () => { }
+  dispatchPost: (isGroup: boolean) => { }
 };
 
-interface IGroupProps {
-    groupName: string | undefined;
-    isGroup: boolean;
-}
+    //isGroup: boolean;
 
-function Feed(props: IGroupProps) {
+function Feed(props: {isGroup: boolean}) {
   const dispatch = useDispatch();
 
   const posts = useSelector(selectPosts);
@@ -35,9 +34,11 @@ function Feed(props: IGroupProps) {
 
   const [shouldUpdateLikes, setShouldUpdateLikes] = useState([false]);
 
+  const group = useSelector(selectGroup);
+
   util.updateAll = (isGroup: boolean) => {
     isGroup ? 
-    dispatch(getGroupPostsAsync(props.groupName))
+    dispatch(getGroupPostsAsync(group.name))
     :
     dispatch(getPostsAsync({}));
     setShouldUpdateLikes([!shouldUpdateLikes[0]]); // :^) 
@@ -63,12 +64,25 @@ function Feed(props: IGroupProps) {
     createComment(postId, comment).then(() => util.updateAll(props.isGroup));
   }
 
-  util.dispatchPost = () => {
-    dispatch(postPostAsync(post));
+  util.dispatchPost = (isGroup) => {
+    isGroup ? dispatch(postGroupPostAsync(post)) : dispatch(postPostAsync(post));
   }
 
   useEffect(() => {
+    console.log("Loading Feed")
     util.updateAll(props.isGroup);
+    
+    setTimeout(() => {
+      let newPost: Post = post;
+      console.log("Assigning groupID");
+      newPost.groupID = group.groupID;
+
+      console.log(group);
+
+      setPost(newPost);
+      console.log("Done loading feed")
+    }, 200)
+    
   }, [])
 
   return (

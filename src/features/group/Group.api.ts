@@ -17,10 +17,16 @@ export const createGroup = async (newGroup: NewGroupRequest): Promise<Group> => 
 
 
 export const getGroupByName = async (groupName: string): Promise<Group> => {
+    console.log("Fetching group info");
     const group = await reverbClientWithAuth.get<Group>(`/api/group/${groupName}`)
 
     if(group.status == 404) {
         throw group.data;
+    }
+
+    if(group.status == 200) {
+        console.log("have group info");
+        return group.data;
     }
     return group.data;
 }

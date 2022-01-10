@@ -3,8 +3,7 @@ import authReducer from '../features/login/authSlice';
 import postsReducer from '../features/post/postSlice';
 import profileReducer from '../features/profile/profileSlice';
 import userReducer from '../features/login/userSlice';
-
-
+import groupReducer from '../features/group/groupSlice';
 
 
 export const store = configureStore({
@@ -12,7 +11,8 @@ export const store = configureStore({
     auth: authReducer,
     posts: postsReducer,
     profile: profileReducer,
-    user: userReducer
+    user: userReducer,
+    group: groupReducer
   }
 });
 

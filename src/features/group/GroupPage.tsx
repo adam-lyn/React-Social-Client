@@ -7,9 +7,9 @@ import GroupInformation from "./GroupInformation";
 export default function GroupPage() {
 
     const { groupName } = useParams();
-
+    
     return <>
     <GroupInformation name={groupName}/>
-    <Feed groupName = {groupName} isGroup={true} />
+    <Feed isGroup={true} />
     </>
 }

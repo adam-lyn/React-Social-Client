@@ -54,7 +54,7 @@ const MainRouter:React.FC<MainRouterProps> = ({loggedIn}:{loggedIn:string}) => {
             {doLogout}
           </Route>
           <Route path="/">
-            <Feed groupName="" isGroup={false}/>
+            <Feed isGroup={false}/>
           </Route>
           
         </Switch>

@@ -1,6 +1,5 @@
 import { Post } from "./post";
 import { reverbClientWithAuth } from '../../remote/reverb-api/reverbClient'
-import { GroupPost } from "./GroupPost";
 
 export const createPost = async (neoPost: Post): Promise<Post> => {
   const {data: post} = await reverbClientWithAuth.post<Post>('/api/post/submit', neoPost);
@@ -8,7 +7,7 @@ export const createPost = async (neoPost: Post): Promise<Post> => {
   return post;
 }
 
-export const createGroupPost = async (neoPost: GroupPost): Promise<Post> => {
+export const createGroupPost = async (neoPost: Post): Promise<Post> => {
   const {data: post} = await reverbClientWithAuth.post<Post>('/api/post/submit', neoPost);
 
   return post;

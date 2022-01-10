@@ -2,8 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Post } from './post';
 import { createGroupPost, createPost, getAllGroupPosts, getAllPosts } from "./post.api";
 import { store } from "../../app/store";
-import { GroupPost } from "./GroupPost";
-
 
 export type PostState = Post[];
 
@@ -39,9 +37,9 @@ export const postPostAsync = createAsyncThunk<Post, Post>(
     }
 );
 
-export const postGroupPostAsync = createAsyncThunk<Post, GroupPost>(
+export const postGroupPostAsync = createAsyncThunk<Post, Post>(
     'post/post/async',
-    async (neoPost: GroupPost, thunkAPI) => {
+    async (neoPost: Post, thunkAPI) => {
         try {
             return await createGroupPost(neoPost);
         } catch (error) {
