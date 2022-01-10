@@ -9,11 +9,14 @@ import { Group } from "./Group";
 import { selectUser } from "../login/userSlice";
 import Feed from "../feed/Feed";
 
-export default function GroupInformation() {
+interface IGroupProp {
+    name: string | undefined
+}
+
+export default function GroupInformation(props: IGroupProp) {
 
     const [doneLoading, setDoneLoading] = useState(false);
     const history = useHistory();
-    const { groupName } = useParams();
     const [groupInfo, setGroupInfo] = useState({} as Group);
     const user = useSelector(selectUser);
 
@@ -24,11 +27,11 @@ export default function GroupInformation() {
     }
 
     useEffect(() => {
-        getGroupInformation(groupName);
+        getGroupInformation(props.name);
     }, [])
 
     function goToEditGroup() {
-        history.push(`/editGroup/${groupName}`);
+        history.push(`/editGroup/${props.name}`);
     }
 
     return(
@@ -48,7 +51,7 @@ export default function GroupInformation() {
                     {groupInfo.description}
                 </Card.Text>
             </Card.Body>
-        </Card>
+        </Card> 
         {groupInfo.owner.id === user.id && groupInfo.owner.email === user.email && <Button id="EditProfileButton" onClick={goToEditGroup}>Edit Profile</Button>}
         </Grid>)
         : (<Image id="LoadingImg" src = {"https://app.revature.com/assets/images/ajax-loader-logo.0cd555cc.gif"} 

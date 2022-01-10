@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, Container, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import SubmitPost from '../post/SubmitPost'
-import { getPostsAsync, postPostAsync, selectPosts } from '../post/postSlice'
+import { getGroupPostsAsync, getPostsAsync, postPostAsync, selectPosts } from '../post/postSlice'
 import PostComponent from '../post/PostComponent'
 import SubmitComment from '../comment/SubmitComment';
 import { createComment } from '../comment/comment.api';
@@ -11,15 +11,19 @@ import { initialComment } from '../comment/comment';
 import RefreshIcon from '../../assets/images/refreshicon.svg'
 
 export let util = {
-  updateAll: () => { },
+  updateAll: (isGroup: boolean) => { },
   leavePost: () => { },
   leaveComment: (npostId: number) => { },
   dispatchComment: () => { },
   dispatchPost: () => { }
 };
 
+interface IGroupProps {
+    groupName: string | undefined;
+    isGroup: boolean;
+}
 
-const Feed = () => {
+function Feed(props: IGroupProps) {
   const dispatch = useDispatch();
 
   const posts = useSelector(selectPosts);
@@ -31,9 +35,13 @@ const Feed = () => {
 
   const [shouldUpdateLikes, setShouldUpdateLikes] = useState([false]);
 
-  util.updateAll = () => {
-    dispatch(getPostsAsync({}))
-    setShouldUpdateLikes([!shouldUpdateLikes[0]]); // :^)
+  util.updateAll = (isGroup: boolean) => {
+    isGroup ? 
+    dispatch(getGroupPostsAsync(props.groupName))
+    :
+    dispatch(getPostsAsync({}));
+    setShouldUpdateLikes([!shouldUpdateLikes[0]]); // :^) 
+    
     // console.log("Updated feed");
   }
 
@@ -52,14 +60,19 @@ const Feed = () => {
   }
 
   util.dispatchComment = () => {
-    createComment(postId, comment).then(() => util.updateAll());
+    createComment(postId, comment).then(() => util.updateAll(props.isGroup));
   }
 
   util.dispatchPost = () => {
     dispatch(postPostAsync(post));
   }
 
+  useEffect(() => {
+    util.updateAll(props.isGroup);
+  }, [])
+
   return (
+    (
     <Container id="feedBody">
       <Row>
         <Col id="postColumn" xs={{span: 8, offset: 2}}>
@@ -67,7 +80,7 @@ const Feed = () => {
             <Button data-testid="postButton" id="postBtn" variant="primary" onClick={() => util.leavePost()}>
               + Create Post
             </Button>
-            <Button data-testid="refreshButton" id="refreshBtn" variant="primary" onClick={() => util.updateAll()}>
+            <Button data-testid="refreshButton" id="refreshBtn" variant="primary" onClick={() => util.updateAll(props.isGroup)}>
               <img src={RefreshIcon} /> Refresh
             </Button>
           </div>
@@ -89,9 +102,8 @@ const Feed = () => {
           {posts.map((post) => (<PostComponent shouldUpdateLikes={shouldUpdateLikes}
             post={post} leaveComment={util.leaveComment} key={post.id} />)).reverse()}
         </Col>
-        
       </Row>
-    </Container>
+    </Container>)
   );
 }
 

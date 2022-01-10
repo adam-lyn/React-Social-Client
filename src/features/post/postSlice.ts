@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Post } from './post';
-import { createPost, getAllPosts } from "./post.api";
+import { createGroupPost, createPost, getAllGroupPosts, getAllPosts } from "./post.api";
 import { store } from "../../app/store";
+import { GroupPost } from "./GroupPost";
 
 
 export type PostState = Post[];
@@ -19,11 +20,30 @@ export const getPostsAsync = createAsyncThunk<Post[], object>(
     }
 );
 
+export const getGroupPostsAsync = createAsyncThunk(
+    'post/getgroups/async',
+    async (groupName: string | undefined, thunkAPI) => {
+            return await getAllGroupPosts(groupName as string);
+
+    }
+);
+
 export const postPostAsync = createAsyncThunk<Post, Post>(
     'post/post/async',
     async (neoPost: Post, thunkAPI) => {
         try {
             return await createPost(neoPost);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+);
+
+export const postGroupPostAsync = createAsyncThunk<Post, GroupPost>(
+    'post/post/async',
+    async (neoPost: GroupPost, thunkAPI) => {
+        try {
+            return await createGroupPost(neoPost);
         } catch (error) {
             return thunkAPI.rejectWithValue(error);
         }
@@ -54,6 +74,9 @@ const postSlice = createSlice({
         })
         .addCase(postPostAsync.rejected, (state, action) => {
             // console.log(action.error);
+        })
+        .addCase(getGroupPostsAsync.fulfilled, (state, action) => {
+            return action.payload;
         })
     }
 });
