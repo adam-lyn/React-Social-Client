@@ -13,13 +13,13 @@ const App = () => {
 
   const loggedIn = useAppSelector(state => state.auth[0].token);
   return (
-    <div className="App">
-      <Navbar loggedIn={loggedIn} />
-      <Stack direction="horizontal" gap={5}>
-        <div className="justify-content-center" style={{width:"100%"}} >
+    <div id="app">
+      {/* <Stack direction="horizontal" gap={5}> */}
+        <Navbar loggedIn={loggedIn}/>
+        <div id="main-router-container">
           <MainRouter loggedIn={loggedIn}/>
         </div>
-      </Stack>
+      {/* </Stack> */}
     </div>
   );
 }

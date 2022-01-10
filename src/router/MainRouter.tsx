@@ -53,7 +53,7 @@ const MainRouter:React.FC<MainRouterProps> = ({loggedIn}:{loggedIn:string}) => {
           <Route path="/logout">
             {doLogout}
           </Route>
-          <Route path="/">
+          <Route path="/feed">
             <Feed isGroup={false}/>
           </Route>
           

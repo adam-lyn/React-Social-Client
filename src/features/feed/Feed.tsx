@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Container, Row, Col } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import SubmitPost from '../post/SubmitPost'
 import { getGroupPostsAsync, getPostsAsync, postGroupPostAsync, postPostAsync, selectPosts } from '../post/postSlice'
@@ -11,6 +11,7 @@ import { initialComment } from '../comment/comment';
 import RefreshIcon from '../../assets/images/refreshicon.svg'
 import { selectGroup } from '../group/groupSlice';
 import { Post } from "../post/post"
+import SearchBar from '../search/SearchBar';
 
 export let util = {
   updateAll: (isGroup: boolean) => { },
@@ -79,39 +80,37 @@ function Feed(props: {isGroup: boolean}) {
   }, [])
 
   return (
-    (
-    <Container id="feedBody">
-      <Row>
-        <Col id="postColumn" xs={{span: 8, offset: 2}}>
-          <div id="feedButtons"> 
-            <Button data-testid="postButton" id="postBtn" variant="primary" onClick={() => util.leavePost()}>
-              + Create Post
-            </Button>
-            <Button data-testid="refreshButton" id="refreshBtn" variant="primary" onClick={() => util.updateAll(props.isGroup)}>
-              <img src={RefreshIcon} /> Refresh
-            </Button>
-          </div>
-          <SubmitPost
-            setPost={setPost}
-            post={post}
-            dispatchPost={util.dispatchPost}
-            show={modalShowPost}
-            onHide={() => setModalShowPost(false)}
-          />
-          <SubmitComment
-            setComment={setComment}
-            comment={comment}
-            show={modalShowComment}
-            dispatchComment={util.dispatchComment}
-            onHide={() => setModalShowComment(false)}
-            postId={postId}
-          />
-          {posts.map((post) => (<PostComponent shouldUpdateLikes={shouldUpdateLikes}
-            post={post} leaveComment={util.leaveComment} key={post.id} />)).reverse()}
-        </Col>
-      </Row>
-    </Container>)
+    <div id="feedBody">
+      <SearchBar />
+      <div id="postColumn">
+        <div id="feedButtons"> 
+          <Button data-testid="postButton" id="postBtn" className='feed-btns' variant="primary" onClick={() => util.leavePost()}>
+            + Create Post
+          </Button>
+          <Button data-testid="refreshButton" id="refreshBtn" className='feed-btns' variant="primary" onClick={() => util.updateAll(props.isGroup)}>
+            <img id="refresh-icon" src={RefreshIcon} /> Refresh
+          </Button>
+        </div>
+        <SubmitPost
+          setPost={setPost}
+          post={post}
+          dispatchPost={util.dispatchPost}
+          show={modalShowPost}
+          onHide={() => setModalShowPost(false)}
+        />
+        <SubmitComment
+          setComment={setComment}
+          comment={comment}
+          show={modalShowComment}
+          dispatchComment={util.dispatchComment}
+          onHide={() => setModalShowComment(false)}
+          postId={postId}
+        />
+        {posts.map((post) => (<PostComponent shouldUpdateLikes={shouldUpdateLikes}
+          post={post} leaveComment={util.leaveComment} key={post.id} />)).reverse()}
+      </div>
+    </div>
   );
 }
 
-export default Feed
+export default Feed;
