@@ -11,6 +11,7 @@ import EditProfilePage from "../features/profile/EditProfilePage";
 import GroupPage from "../features/group/GroupPage";
 import { CreateGroupPage } from "../features/group/CreateGroupPage";
 import { EditGroupPage } from "../features/group/EditGroupPage"
+import FollowingFeed from "../features/feed/FollowingFeed";
 
 
 interface MainRouterProps{
@@ -32,6 +33,9 @@ const MainRouter:React.FC<MainRouterProps> = ({loggedIn}:{loggedIn:string}) => {
     toReturn =
       <div id="container-to-remove">
         <Switch>
+          <Route path="/feed/following">
+            <FollowingFeed/>
+          </Route>
           <Route path="/profile/:id">
             <ProfilePage beep={false}/>
           </Route>

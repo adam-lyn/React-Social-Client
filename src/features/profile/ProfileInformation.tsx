@@ -31,7 +31,7 @@ export default function ProfileInformation(props: any) {
   let initialFollowState = false;
 
   // Constants to be manipulated within .then statements
-  const [isFollowing, setIsFollowing] = React.useState(initialFollowState);
+  const [isFollowing, setIsFollowing] = useState(initialFollowState);
 
   // Fetches a fresh profile
   function updateProfile() {
