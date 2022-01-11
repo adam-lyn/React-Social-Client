@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import { Grid, hslToRgb } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -66,7 +66,7 @@ export default function EditProfile() {
 
                                 <div className="form_input-group">
                                     <label htmlFor="about_me">About Me</label>
-                                    <textarea className="form_input" rows={10} name="about_me" placeholder="Your about me" value={input.about_me}
+                                    <textarea className="form_input" rows={9} name="about_me" placeholder="Your about me" value={input.about_me}
                                         onChange={handleChange}  > </textarea>
                                 </div>
                             </Col>
@@ -89,7 +89,9 @@ export default function EditProfile() {
                                     <input className="form_input" type="textbox" name="location" placeholder="Location" value={input.location}
                                         onChange={handleChange} required />
                                 </div>
-
+                                
+                                <Col id="editCol3">
+                                <br /> <br />
                                 <div className="form_input-group">
                                 <label htmlFor="profile_img">Select Profile Image</label>
                                     <div className='form_input'>
@@ -102,7 +104,7 @@ export default function EditProfile() {
                                         <Upload_Picture targetPicture="header"/>
                                     </div>
                                 </div>
-                                <br />
+                                </Col>
                             </Col>
                         </Row>
                         <Row id="editButtonsRow">

@@ -102,10 +102,9 @@ export default function ProfileInformation(props: any) {
                 <h6 id="followers-num">followers: {profile.follower_num}</h6>
                 <h6 id="following-num">following: {profile.following_num}</h6>
               </div>
-              {showEditButton ? <Button id="EditProfileButton" onClick={goToEditProfile}>Edit Profile</Button> : <></>}
             </Card.Title>
             
-                {!(id === undefined) ? <Button variant="success" id="follow-btn" type="button" onClick={() =>toggleFollowButton()} > {followButton} </Button> : <></>}
+                {!(id === undefined) ? <Button variant="success" className="follow-btn" type="button" onClick={() =>toggleFollowButton()} > {followButton} </Button> : <></>}
 
             <Card.Text id="AboutMe">
               <h5>About Me</h5>
@@ -121,6 +120,7 @@ export default function ProfileInformation(props: any) {
             </Card.Text>
           </Card.Body>
         </div>
+        {showEditButton ? <Button id="EditProfileButton" onClick={goToEditProfile}>Edit Profile</Button> : <></>}
       </div>
     ) : (
       <Image
