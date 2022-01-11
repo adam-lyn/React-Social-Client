@@ -1,4 +1,4 @@
-import { Grid, hslToRgb } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -90,7 +90,6 @@ export default function EditProfile() {
                                         onChange={handleChange} required />
                                 </div>
                                 
-                                <Col id="editCol3">
                                 <br /> <br />
                                 <div className="form_input-group">
                                 <label htmlFor="profile_img">Select Profile Image</label>
@@ -104,7 +103,6 @@ export default function EditProfile() {
                                         <Upload_Picture targetPicture="header"/>
                                     </div>
                                 </div>
-                                </Col>
                             </Col>
                         </Row>
                         <Row id="editButtonsRow">
