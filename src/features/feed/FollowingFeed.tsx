@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import SubmitPost from '../post/SubmitPost';
@@ -58,6 +58,10 @@ const FollowingFeed = () => {
   util.dispatchPost = () => {
     dispatch(postPostAsync(post));
   }
+
+  useEffect(() =>{
+    util.updateAll();
+  },[]);
 
   return (
     <div id="feedBody">
