@@ -8,7 +8,7 @@ import { useAppDispatch } from "../app/hooks";
 import { logout } from '../features/login/authSlice'
 import ProfilePage from "../features/profile/ProfilePage";
 import EditProfilePage from "../features/profile/EditProfilePage";
-
+// import SearchBar from "../features/search/SearchBar";
 
 interface MainRouterProps{
   loggedIn:string
@@ -28,6 +28,7 @@ const MainRouter:React.FC<MainRouterProps> = ({loggedIn}:{loggedIn:string}) => {
   if (loggedIn) {
     toReturn =
       <div>
+        {/* <SearchBar /> */}
         <Switch>
           <Route path="/profile/:id">
             <ProfilePage beep={false}/>

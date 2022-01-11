@@ -1,12 +1,12 @@
 import GoodResult from './GoodResult';
 import BadResult from './BadResult';
 
-export default function ResultsList({ results }:any) {
+export default function ResultsList({ results, handleClick }:any) {
   if (results.length) {
     return (
       <div className='results-list'>
         {
-          results.map((result: any) => <GoodResult user={result} />)
+          results.map((result: any) => <GoodResult handleClick={handleClick} user={result} />)
         }
       </div>
     );

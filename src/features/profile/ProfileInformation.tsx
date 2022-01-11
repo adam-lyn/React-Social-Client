@@ -19,7 +19,8 @@ export default function ProfileInformation(props: any) {
   const profile = useSelector(selectProfile);
   const dispatch = useDispatch();
   const history = useHistory();
-  const { id } = useParams();
+  // const { id } = useParams();
+  const id = props.id
   const [showEditButton, setShowEditButton] = useState(false);
 
   //attempting follow button hide
@@ -78,10 +79,11 @@ export default function ProfileInformation(props: any) {
   useEffect(() => {
     // Set the doneLoading boolean to false so that we keep them on the loading screen until things are done.
     setDoneLoading(false);
-
+    console.log(id)
+    console.log(profile)
+    
     // Load the page
     if(id === undefined) { // If there's no id in the path variable then we go to the logged in user's profile
-
         // Gets their profile from the stored profile for the user.
         dispatch(getProfileAsync(profile)); 
 
