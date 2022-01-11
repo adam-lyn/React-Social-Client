@@ -733,7 +733,7 @@ body,
 }
 
 .list-group-item{
-  background: var(--background);
+  background: var(--background-transparent-darkGrey);
   color: var(--text-primary)
 }
 
