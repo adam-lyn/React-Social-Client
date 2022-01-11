@@ -73,10 +73,13 @@ function Feed(props: {isGroup: boolean}) {
     util.updateAll(props.isGroup);
     
     let newPost: Post = post;
-    if (props.isGroup) newPost.groupID = group.groupID;
+    if (props.isGroup) { 
+      newPost.groupID = group.groupID;
+    } else {
+      newPost.groupID = "";
+    }
 
     setPost(newPost);
-    
   }, [])
 
   return (
@@ -106,9 +109,9 @@ function Feed(props: {isGroup: boolean}) {
           onHide={() => setModalShowComment(false)}
           postId={postId}
         />
+        </div>
         {posts.map((post) => (<PostComponent shouldUpdateLikes={shouldUpdateLikes}
           post={post} leaveComment={util.leaveComment} key={post.id} />)).reverse()}
-      </div>
     </div>
   );
 }

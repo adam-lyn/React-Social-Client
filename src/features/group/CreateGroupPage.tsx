@@ -28,7 +28,7 @@ export function CreateGroupPage() {
 
     const cancel = (e: any) => {
         e.preventDefault();
-        history.push('/');
+        history.push('/feed');
     }
 
     return (
@@ -48,12 +48,12 @@ export function CreateGroupPage() {
                                 </div>
                             </Col>
                         </Row>
-                        <Row id="editButtonsRow">
+                        <Row className="groupEditButtonsRow">
                             <Col id="createGroupBtnCol">
-                                <button data-testid="updateButton" id="create_group" type="button" onClick={(e) => create(e)} >Create</button><br />
+                                <button data-testid="updateButton" id="CreateGroup" className="FormButtons" type="button" onClick={(e) => create(e)} >Create</button><br />
                             </Col>
                             <Col id="cancelGroupBtnCol">
-                                <button data-testid="cancelButton" id="cancel_group" type="button" onClick={(e) => cancel(e)} >Cancel</button><br />
+                                <button data-testid="cancelButton" id="CancelCreateGroup" className="FormButtons" type="button" onClick={(e) => cancel(e)} >Cancel</button><br />
                             </Col>
                         </Row>
                     </Container>

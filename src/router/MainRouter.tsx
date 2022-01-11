@@ -30,7 +30,7 @@ const MainRouter:React.FC<MainRouterProps> = ({loggedIn}:{loggedIn:string}) => {
   let toReturn = <></>;
   if (loggedIn) {
     toReturn =
-      <div>
+      <div id="container-to-remove">
         <Switch>
           <Route path="/profile/:id">
             <ProfilePage beep={false}/>

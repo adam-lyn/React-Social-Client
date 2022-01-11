@@ -1,3 +1,4 @@
+import { group } from "console";
 import { reverbClientWithAuth } from "../../remote/reverb-api/reverbClient";
 import { NewGroupRequest } from "./dtos/NewGroupRequest";
 import UpdateGroupRequest from "./dtos/UpdateGroupRequest";
@@ -48,6 +49,36 @@ export const editGroup = async (updatedGroup: UpdateGroupRequest, oldGroupName: 
 
     return group.data;
 
+}
+
+export const deleteGroup = async (groupName: string) => {
+    const resp = await reverbClientWithAuth.delete(`/api/group/delete/${groupName}`);
+
+    if(resp.status == 403) {
+        throw resp.data;
+    }
+
+    return resp;
+}
+
+export const joinGroup = async (groupName: string) => {
+    const resp = await reverbClientWithAuth.patch(`/api/group/join/${groupName}`);
+
+    if(resp.status == 409) {
+        throw resp.data;
+    }
+
+    return resp;
+}
+
+export const leaveGroup = async (groupName: string) => {
+    const resp = await reverbClientWithAuth.patch(`/api/group/leave/${groupName}`);
+
+    if(resp.status == 409) {
+        throw resp.data;
+    }
+
+    return resp;
 }
 
 

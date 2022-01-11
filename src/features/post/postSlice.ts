@@ -48,10 +48,13 @@ export const postGroupPostAsync = createAsyncThunk<Post, Post>(
     }
 );
 
-const postSlice = createSlice({
+export const postSlice = createSlice({
     name: 'posts',
     initialState: initialState,
     reducers: {
+        clear: (state) => {
+            state.length = 0;
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -83,5 +86,7 @@ type Rootstate = ReturnType<typeof store.getState>;
 export const selectPosts = (state: Rootstate) => {
     return state.posts
 }
+
+export const { clear } = postSlice.actions;
 
 export default postSlice.reducer;
