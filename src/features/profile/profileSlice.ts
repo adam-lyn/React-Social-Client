@@ -27,9 +27,11 @@ export const getProfileAsync = createAsyncThunk<Profile, object>(
     {
         try
         {
+            console.log("Inside Try Async Only");
             return await getProfile();
         } catch ( error )
         {
+            console.log("inside catch Async only");
             return thunkAPI.rejectWithValue( error );
         }
     }
@@ -41,9 +43,11 @@ export const getProfileByIdAsync = createAsyncThunk<Profile, string>(
     {
         try
         {
+            console.log("Inside Try By Id Async");
             return await getProfileById(id);
         } catch ( error )
         {
+            console.log("inside catch by Id Async");
             return thunkAPI.rejectWithValue( error );
         }
     }

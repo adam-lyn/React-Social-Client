@@ -78,10 +78,11 @@ export default function ProfileInformation(props: any) {
   useEffect(() => {
     // Set the doneLoading boolean to false so that we keep them on the loading screen until things are done.
     setDoneLoading(false);
-
+    console.log("Before Id Check");
     // Load the page
     if(id === undefined) { // If there's no id in the path variable then we go to the logged in user's profile
 
+      console.log("ID was Undefined Block");
         // Gets their profile from the stored profile for the user.
         dispatch(getProfileAsync(profile)); 
 
@@ -91,10 +92,13 @@ export default function ProfileInformation(props: any) {
         
         // Set a timeout for any API calls to finish, and when it finishes, tell the page it is ready to be loaded which swaps us off the loading page.
         setTimeout(() => setDoneLoading(true), 200);
-    } else { // If there is an id in the path, then we load the corrosponding profile.
+    } else { 
+        console.log("Id was defined");
+        // If there is an id in the path, then we load the corrosponding profile.
         // Make an api call for the appropriate profile
         dispatch(getProfileByIdAsync(id));
-
+        
+        console.log("After getProfileByIdAsync Call");
         // Check if the profile is owned by the user who navigated into it.
         checkProfileOwnership(id).then((owns) => {
             // Set the buttons appropriately to the ownership rights.
