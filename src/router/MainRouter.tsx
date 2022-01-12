@@ -8,8 +8,6 @@ import { useAppDispatch } from "../app/hooks";
 import { logout } from '../features/login/authSlice'
 import ProfilePage from "../features/profile/ProfilePage";
 import EditProfilePage from "../features/profile/EditProfilePage";
-// import { Redirect } from "react-router";
-
 
 interface MainRouterProps{
   loggedIn:string
