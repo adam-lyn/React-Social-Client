@@ -1,4 +1,6 @@
+import { profile } from 'console';
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { reverbClient } from "../../remote/reverb-api/reverbClient";
 import ResultsList from './ResultsList';
 import SearchResult from './SearchResult';
@@ -7,6 +9,7 @@ export default function SearchBar() {
   const [input, setInput] = useState("");
   const [initialResults, setInitialResults] = useState<SearchResult[]>([]);
   const type:string = "people";
+  const history = useHistory()
 
   async function getSearch() {
     const resp = await reverbClient.get(`/api/search?query=${input}`);
@@ -25,6 +28,13 @@ export default function SearchBar() {
     setInput(e.target.value);
   }
 
+  const handleClick = (userId:string) => {
+    setInitialResults([])
+    setInput("")
+    console.log(userId)
+    history.push(`/profile/${userId}`)
+  }
+
   const renderSearchResults = (type:string) => {
     if (input) {
       let results:SearchResult[] = [];
@@ -33,10 +43,10 @@ export default function SearchBar() {
           result => result.email.includes(input)
         );
         if (results.length) {
-          return (<ResultsList results={results.slice(0, 8)} type={type} />);
+          return (<ResultsList results={results.slice(0, 8)} type={type} handleClick={handleClick} />);
         }
       }
-      return (<ResultsList results={results} type={type} />);
+      return (<ResultsList results={results} type={type} handleClick={handleClick} />);
     }
   }
 

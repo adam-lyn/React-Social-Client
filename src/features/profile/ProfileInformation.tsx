@@ -74,7 +74,7 @@ export default function ProfileInformation(props: any) {
   }
   
 
-
+console.log("before useEffect")
   useEffect(() => {
     // Set the doneLoading boolean to false so that we keep them on the loading screen until things are done.
     setDoneLoading(false);
@@ -115,7 +115,7 @@ export default function ProfileInformation(props: any) {
     }
     
   }, [props.beep]); // beep beep :^) (Not sure why this is here. Possibly some sort of ownership parsing?)
-
+  console.log("after useEffect")
   const goToEditProfile = () => {
     history.push("/editProfile");
   }
