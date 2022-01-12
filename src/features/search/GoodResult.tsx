@@ -29,7 +29,7 @@ export default function GoodResult({ user }: any) {
     <div>
       <NavLink
         className='search-result'
-        to={"/profile/" + profile?.id}
+        to={"/user_profile/" + profile?.id}
         key={profile?.id}
       >
         <img className='profile-pic-mini' src={profile?.profile_img}/>
