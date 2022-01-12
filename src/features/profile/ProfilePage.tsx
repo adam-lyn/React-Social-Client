@@ -6,8 +6,6 @@ export default function ProfilePage(props: any) {
   return(
     <>
       <SearchBar />
-      {console.log(props) }
-      {console.log(useParams)}
       <ProfileInformation beep={props.beep}/>
     </>
   )
