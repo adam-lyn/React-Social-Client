@@ -51,4 +51,39 @@ describe('logged in navbar', () => {
     );
     expect(getByText("Profile")).toBeInTheDocument();
   })
+  
+  it('should show sun', async () => {
+    const { getByText } = render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <Navbar loggedIn={"a"} />
+        </BrowserRouter>
+      </Provider>
+    );
+    expect(getByText("🌞/🌜")).toBeInTheDocument();
+  })
+  it('should contain attribute', async () => {
+    const { getByText } = render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <Navbar loggedIn={"a"} />
+        </BrowserRouter>
+      </Provider>
+    );
+    expect(document.documentElement).toHaveAttribute("data-theme", "light");
+  })
+  it('should contain attribute', async () => {
+    const { getByText } = render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <Navbar loggedIn={"a"} />
+        </BrowserRouter>
+      </Provider>
+    );
+    const button = document.getElementById("theme-button");
+    if(button) {
+      button.click();
+      expect(document.documentElement).toHaveAttribute("data-theme", "dark");
+  }
+  })
 })

@@ -102,8 +102,10 @@ const PostComponent =  ({ shouldUpdateLikes, post, leaveComment }:
     return (
         <Card id="postCard">
             <Card.Header>
+                {/* Link to the group's profile in Reverb*/}
+                {post.groupName && <Card.Subtitle id="group"><Link to={`/group/${post.groupName}`}>{`${post.groupName} / `}</Link></Card.Subtitle>}
                 {/* Link to the poster's profile in Reverb*/}
-                <Card.Subtitle id="postAuthor"><Link to={`profile/${authorProfile.id}`}>{"" + authorProfile.first_name} {"" + authorProfile.last_name}</Link></Card.Subtitle>
+                <Card.Subtitle id="postAuthor"><Link to={`/profile/${authorProfile.id}`}>{"" + authorProfile.first_name} {"" + authorProfile.last_name}</Link></Card.Subtitle>
                 {/*Date that the post was made.*/}
                 <Card.Text id = "postTime">{"" + new Date(post.date + 'Z').toLocaleString() }</Card.Text>
                 {/*To like the post*/}

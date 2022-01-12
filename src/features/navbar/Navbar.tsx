@@ -13,8 +13,10 @@ function switchTheme() {
   let current = document.documentElement.getAttribute("data-theme");
   if(current == "light"){
     document.documentElement.setAttribute("data-theme", "dark");
+    localStorage.setItem("data-theme","dark");
   }else{
     document.documentElement.setAttribute("data-theme", "light");
+    localStorage.setItem("data-theme","light");
   }
 }
 
@@ -59,9 +61,10 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ loggedIn }: { loggedIn: s
       </Nav>
   } else {
     sideNavBar = 
+    <div id="NavbarContainer">
       <Nav id="navbar" defaultActiveKey="home">
 
-        <NavLink id="homeLink" data-testid="logolink" as={Link} to={"/"} eventKey="home">
+        <NavLink id="homeLink" data-testid="logolink" as={Link} to={"/feed"} eventKey="home">
           <img
             alt=""
             src={Logo}
@@ -73,9 +76,21 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ loggedIn }: { loggedIn: s
 
           <button id="theme-button" onClick={() => switchTheme()}>🌞/🌜</button>
 
+          <NavLink id="personalFeed" className="navbar-link" as={Link} to={"/feed/personal"} eventKey="home">
+           Personal Feed
+          </NavLink>
+          
+          <NavLink id="followingFeed" className="navbar-link" as={Link} to={"/feed/following"} eventKey="home">
+           Follow Feed
+          </NavLink>
+
           <NavLink as={Link} to={"/profile"} id="profileLink" className="navbar-link" eventKey="profile-link" onClick={() => history.push("/profile")}>
             Profile
           </NavLink>
+
+          <Nav.Link as={Link} to={"/createGroup"} className="navbar-link" id="group-Link" eventKey="group-link" onClick ={() => history.push("/createGroup")}>
+            Create Group
+          </Nav.Link>
 
           <NavLink as={Link} to={"/logout"} id="logoutLink" className="navbar-link" eventKey="logout-link">
             Logout
@@ -83,7 +98,11 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ loggedIn }: { loggedIn: s
 
         </div>
       </Nav>
+      </div>
   }
+
+  const theme = localStorage.getItem("data-theme") ? localStorage.getItem("data-theme"): "light";
+  document.documentElement.setAttribute("data-theme", theme!);
 
   return (
     <div>
