@@ -30,7 +30,7 @@ export default function SearchBar() {
       let results:SearchResult[] = [];
       if (initialResults.length) {
         results = initialResults.filter(
-          result => result.email.includes(input)
+          result => result.label.includes(input)
         );
         if (results.length) {
           return (<ResultsList results={results.slice(0, 8)} type={type} />);

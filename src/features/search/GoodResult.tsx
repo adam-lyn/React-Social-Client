@@ -10,7 +10,7 @@ export default function GoodResult({ user }: any) {
   useEffect(() => { 
     const getProfileId = async () => {
       if (!profile) {
-        const resp = await reverbClientWithAuth.get(`/api/profile/getByAuthor/${user.id}`);
+        const resp = await reverbClientWithAuth.get(`/api/profile/getByAuthor/${user.key}`);
         setProfile(resp.data);
       }
     };
@@ -22,7 +22,7 @@ export default function GoodResult({ user }: any) {
   }
 
   const followUser = async () => {
-    const resp = await reverbClientWithAuth.put(`/api/user/follow-user/${user?.id}`);
+    const resp = await reverbClientWithAuth.put(`/api/user/follow-user/${user?.key}`);
   }
 
   return (
@@ -34,7 +34,7 @@ export default function GoodResult({ user }: any) {
       >
         <img className='profile-pic-mini' src={profile?.profile_img}/>
         {profile?.first_name}&nbsp;&nbsp;
-        {user.email}
+        {user.label}
       </NavLink>
       <button type='button' className="follow-btn" onClick={handleClick}>
         FOLLOW

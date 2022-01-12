@@ -1,4 +1,4 @@
 export default interface SearchResult {
-  id: string,
-  email: string,
+  key: string,
+  label: string,
 }
