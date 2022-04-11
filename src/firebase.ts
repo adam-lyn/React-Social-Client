@@ -19,19 +19,19 @@ import { getAuth } from "firebase/auth"
 // })
 
 const app = firebase.initializeApp( {
-	apiKey: "AIzaSyBReZ6rIEQJPYModM-eLP0R8kMynXzzEoI",
-    authDomain: "react-social-client-12420.firebaseapp.com",
-    projectId: "react-social-client-12420",
-    storageBucket: "react-social-client-12420.appspot.com",
-    messagingSenderId: "75724424160",
-    appId: "1:75724424160:web:c2df380c469cc44267e185"
+	// apiKey: "AIzaSyBReZ6rIEQJPYModM-eLP0R8kMynXzzEoI",
+    // authDomain: "react-social-client-12420.firebaseapp.com",
+    // projectId: "react-social-client-12420",
+    // storageBucket: "react-social-client-12420.appspot.com",
+    // messagingSenderId: "75724424160",
+    // appId: "1:75724424160:web:c2df380c469cc44267e185"
 	
-	// apiKey: "AIzaSyA7yH90NTz5v2OCDC0gYk3OUkAv4unDCAs",
-	// authDomain: "alreverb3.firebaseapp.com",
-	// projectId: "alreverb3",
-	// storageBucket: "alreverb3.appspot.com",
-	// messagingSenderId: "261611516418",
-	// appId: "1:261611516418:web:497986d4b9a78c554a2d1b"
+	apiKey: "AIzaSyA7yH90NTz5v2OCDC0gYk3OUkAv4unDCAs",
+	authDomain: "alreverb3.firebaseapp.com",
+	projectId: "alreverb3",
+	storageBucket: "alreverb3.appspot.com",
+	messagingSenderId: "261611516418",
+	appId: "1:261611516418:web:497986d4b9a78c554a2d1b"
 } )
   
 
