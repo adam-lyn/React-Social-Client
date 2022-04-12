@@ -1,27 +1,44 @@
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { Button, Card, ListGroup, ListGroupItem } from "react-bootstrap";
 import { Post } from './post';
 import { checkIfPostCanBeLiked, getNumLikes, likePost, unlikePost } from "../like/likes.api";
+import { bookmarkPost, checkIfPostCanBeBookmarked, removeBookmark } from "../bookmark/bookmarks.api";
 import { Link } from "react-router-dom";
 import ReverbIcon from '../../assets/images/reverb_icon_final.png';
 import { formatYT } from "../../util/youtubeFunctions";
-import { getProfile, getProfileByAuthor, getProfileById } from "../profile/profile.api";
+import { useSelector, useDispatch } from "react-redux";
+import { selectUser } from "../login/userSlice";
+import { setNotifications } from "../notification/notificationSlice";
+import { getProfileByAuthor, getProfileById } from "../profile/profile.api";
+import { postNotification, getNotificationsByOwner } from "../notification/notification.api";
 import { Profile, initialProfile } from "../profile/profile";
 
-const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment }: 
-    { shouldUpdateLikes: boolean[], post: Post, leaveComment: any }) =>  {
+const  PostComponent =  ({ author, shouldUpdateLikes, post, leaveComment, shouldUpdateCanBookmark }: 
+    { author: string, shouldUpdateLikes: boolean[], post: Post, leaveComment: any, shouldUpdateCanBookmark: boolean[] }) =>  {
 
     const initialLikes: number = 0;
     const [canLike, setCanLike] = useState(false);
     const [likes, setLikes] = useState(initialLikes);
+    const [canBookmark, setCanBookmark] = useState(true); 
     const [authorProfile, setAuthorProfile] = useState<Profile>(initialProfile);
     const [commentAuthor, setCommentAuthor] = useState<Profile>(initialProfile);
+
+    const user = useSelector(selectUser);
+
+    const dispatch = useDispatch();
 
     const updateLikes = () => {
         // console.log("Calling backend to update likes on post " + post.id);
         getNumLikes(post.id)
             .then(
                 (data) => { setLikes(data) }
+            );
+    }
+
+    const updateCanBookmark = () => {
+        checkIfPostCanBeBookmarked(post.id)
+            .then(
+                (data) => { setCanBookmark(data);}
             );
     }
 
@@ -34,10 +51,28 @@ const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment }:
             likePost(post.id).then(async () => {
                 //instead of making another DB call, it just updates the likes by 1
                 setLikes(likes + 1);
-            }).catch((e) => {
+
+                try {
+                  await postNotification(
+                    {
+                      otherUserId: post.authorID, 
+                      type_id: {
+                        id: '1',
+                        typeName: 'like'
+                      }
+                    }
+                  );
+                  
+                  const res = await getNotificationsByOwner(user.id);
+                  dispatch(setNotifications(res.data));
+
+                } catch (err) {
+                  console.log(err);
+                }
+            }).catch((err) => {
                 //unsuccessful
                 setCanLike(true);
-                console.log(e)
+                console.log(err)
             })
         }
         else 
@@ -45,13 +80,34 @@ const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment }:
             setCanLike(true);
             unlikePost(post.id).then(async () => {
                 setLikes(likes - 1);
-            }).catch((e) => {
+            }).catch((err) => {
                 //unsuccessful
                 setCanLike(false);
-                // console.log(e)
+                console.log(err)
             })
         }
         
+    }
+
+
+    const addBookmark = () => {
+        bookmarkPost(post.id).then(async () => {
+            console.log("Bookmark added: ", post.id);
+            setCanBookmark(false);
+        }).catch((e)=>{
+            setCanBookmark(true);
+            console.log(e);
+        })
+    }
+
+    const deleteBookmark = () => {
+        removeBookmark(post.id).then(async () => {
+            console.log("Bookmark removed: ", post.id);
+            setCanBookmark(true);
+        }).catch((e)=>{
+            setCanBookmark(false);
+            console.log(e);
+        })
     }
 
     const getPostAuthor = () => {
@@ -79,10 +135,11 @@ const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment }:
     
     useEffect(() => {
         updateLikes();
+        updateCanBookmark();
         getPostAuthor();
         checkIfPostCanBeLiked(post.id).then(canLikeReturn => setCanLike(!canLikeReturn));
-    }, [shouldUpdateLikes]); 
-
+        checkIfPostCanBeBookmarked(post.id).then(canBookmarkReturn => setCanBookmark(!canBookmarkReturn));
+    }, [shouldUpdateLikes, shouldUpdateCanBookmark]); 
 
     // Fetch the profile of the post's author to be linked
     
@@ -106,8 +163,17 @@ const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment }:
                 {/*Date that the post was made.*/}
                 <Card.Text id = "postTime">{"" + new Date(post.date + 'Z').toLocaleString() }</Card.Text>
                 {/*To like the post*/}
-                <Button data-testid="reverbButton" id="reverbButton" onClick={() => likePostFunc()} variant="warning"
-                    style={{ float: 'right', marginTop: "-2rem" }}>{likes}<img id="reverbIcon" src={ReverbIcon} alt="Click to Like!"/></Button>
+                <Button data-testid="reverbButton" id="reverbButton" onClick={likePostFunc} variant="warning"
+                    style={{ float: 'right', marginTop: "-2rem", fontSize:"20px" }}>{likes}<img id="reverbIcon" src={ReverbIcon} alt="Click to Like!"/>
+                </Button>
+                
+                {canBookmark?
+                    <Button data-testid="bookmarkButton" id="bookmarkButton" onClick={addBookmark} variant="warning"
+                    style={{ float: 'right', marginTop: "-2rem", marginRight: "1rem"}}><i style={{fontSize:"20px"}} className="bi bi-bookmark-plus"></i></Button>:
+                    <Button data-testid="bookmarkButton" id="bookmarkButton" onClick={deleteBookmark} variant="warning"
+                    style={{ float: 'right', marginTop: "-2rem", marginRight: "1rem" }}><i style={{fontSize:"20px"}} className="bi bi-bookmark-check"></i></Button>   
+                }
+                
             </Card.Header>
             <Card.Body id="postBody">
                 {/*Sets the contents of a post. First by setting the embed. */}
@@ -137,7 +203,7 @@ const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment }:
                 
                 
             <Card.Body>
-                <Button data-testid="submitButton" id="leaveCommentBtn" onClick={() => leaveComment(post.id)}>Leave Comment</Button>
+                <Button data-testid="submitButton" id="leaveCommentBtn" onClick={() => leaveComment(post.id, author)}>Leave Comment</Button>
             </Card.Body>
         </Card>
     );

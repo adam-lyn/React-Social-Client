@@ -12,6 +12,7 @@ const reverbClient = axios.create( {
 const reverbClientWithAuth = axios.create( {
   baseURL: 'Reverb-eb-env.eba-havvpanq.us-east-2.elasticbeanstalk.com',
   // baseURL: 'http://localhost:5000',
+
   headers: {
     'Content-Type': 'application/json',
     'Authorization': ""

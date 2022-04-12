@@ -9,6 +9,9 @@ import { initialComment } from '../comment/comment';
 import RefreshIcon from '../../assets/images/refreshicon.svg'
 import { selectGroup } from '../group/groupSlice';
 import { Post } from "../post/post"
+import { postNotification, getNotificationsByOwner } from "../notification/notification.api";
+import { setNotifications } from '../notification/notificationSlice';
+import { selectUser } from '../login/userSlice';
 
 // components
 import SearchBar from '../search/SearchBar';
@@ -22,10 +25,13 @@ function Feed({isGroup}: {isGroup: boolean}) {
   const [modalShowPost, setModalShowPost] = useState(false);
   const [modalShowComment, setModalShowComment] = useState(false);
   const [postId, setPostId] = useState(0);
+  const [ownerId, setOwnerId] = useState('');
   const [shouldUpdateLikes, setShouldUpdateLikes] = useState([false]);
+  const [shouldUpdateCanBookmark, setShouldUpdateCanBookmark] = useState([false]);
   
   const posts = useSelector(selectPosts);
   const group = useSelector(selectGroup);
+  const user = useSelector(selectUser);
   
   const dispatch = useDispatch();
 
@@ -36,22 +42,11 @@ function Feed({isGroup}: {isGroup: boolean}) {
     } else {
        posts = await getAllPosts();
     }
-    // posts = [{
-    //   id: "123445",
-    //   title: "title",
-    //   postText: "some text here",
-    //   contentLink: "",
-    //   contentType: "",
-    //   date: new Date(),
-    //   comments: [],
-    //   authorID: "Aidan",
-    //   groupID: "",
-    //   groupName: ""
-    // }];
     
     dispatch(update(posts));
       
     setShouldUpdateLikes([!shouldUpdateLikes[0]]);
+    setShouldUpdateCanBookmark([!shouldUpdateCanBookmark[0]]);
   }
 
   const leavePost = () => {
@@ -59,14 +54,37 @@ function Feed({isGroup}: {isGroup: boolean}) {
     setModalShowPost(true);
   }
 
-  const leaveComment = (npostId: number) => {
+  const leaveComment = (npostId: number, nOwnerId: string) => {
     setComment(initialComment);
     setPostId(npostId);
+    setOwnerId(nOwnerId);
     setModalShowComment(true);
   }
 
   const dispatchComment = () => {
-    createComment(postId, comment).then(() => updateAll(isGroup));
+    createComment(postId, comment)
+      .then(async () => {
+        updateAll(isGroup);
+        try {
+          const notifRes = await postNotification(
+            {
+              otherUserId: ownerId, 
+              type_id: {
+                id: '2',
+                typeName: 'comment'
+              }
+            }
+          );
+          console.log(notifRes);
+          
+          const res = await getNotificationsByOwner(user.id);
+          dispatch(setNotifications(res.data));
+
+        } catch (err) {
+          console.log(err);
+        }
+
+      });
   }
 
   const dispatchPost = async (isGroup?: boolean) => {
@@ -130,7 +148,7 @@ function Feed({isGroup}: {isGroup: boolean}) {
           postId={postId}
         />
         </div>
-        {posts.map((post) => (<PostComponent shouldUpdateLikes={shouldUpdateLikes}
+        {posts.map((post) => (<PostComponent author={post.authorID} shouldUpdateLikes={shouldUpdateLikes} shouldUpdateCanBookmark={shouldUpdateCanBookmark}
           post={post} leaveComment={leaveComment} key={post.id} />)).reverse()}
     </div>
   );
