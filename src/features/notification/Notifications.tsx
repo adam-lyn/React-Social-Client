@@ -56,9 +56,9 @@ const Notifications = ({loggedIn}: {loggedIn: string}) => {
               notifications.map((notification: any) => (
                 <div id={notification.id}>
                   {notification.type_id.typeName === 'like' ?
-                    (<p>{notification.otherUser.email} liked your post!</p>)
+                    (<p>{notification.owner.email} liked your post!</p>)
                   :
-                    (<p>{notification.otherUser.email} commented on your post!</p>)
+                    (<p>{notification.owner.email} commented on your post!</p>)
                   } 
                 </div>
               ))
