@@ -44,7 +44,7 @@ const  PostComponent =  ({ author, shouldUpdateLikes, post, leaveComment, should
 
     
 
-    const likePostFunc = (e: SyntheticEvent) => {
+    const likePostFunc = () => {
         if (canLike)
         {
             setCanLike(false);
@@ -52,15 +52,10 @@ const  PostComponent =  ({ author, shouldUpdateLikes, post, leaveComment, should
                 //instead of making another DB call, it just updates the likes by 1
                 setLikes(likes + 1);
 
-                const target = e.target as HTMLInputElement;
-                const button = target.parentNode as HTMLButtonElement;
-                const otherUser = button.parentNode as HTMLDivElement;
-                const otherUserId = otherUser.getAttribute('id') as string;
-
                 try {
                   await postNotification(
                     {
-                      otherUserId, 
+                      otherUserId: post.authorID, 
                       type_id: {
                         id: '1',
                         typeName: 'like'
@@ -160,7 +155,7 @@ const  PostComponent =  ({ author, shouldUpdateLikes, post, leaveComment, should
 
     return (
         <Card id="postCard">
-            <Card.Header id={user.id}>
+            <Card.Header>
                 {/* Link to the group's profile in Reverb*/}
                 {post.groupName && <Card.Subtitle id="group"><Link to={`/group/${post.groupName}`}>{`${post.groupName} / `}</Link></Card.Subtitle>}
                 {/* Link to the poster's profile in Reverb*/}
@@ -169,7 +164,8 @@ const  PostComponent =  ({ author, shouldUpdateLikes, post, leaveComment, should
                 <Card.Text id = "postTime">{"" + new Date(post.date + 'Z').toLocaleString() }</Card.Text>
                 {/*To like the post*/}
                 <Button data-testid="reverbButton" id="reverbButton" onClick={likePostFunc} variant="warning"
-                    style={{ float: 'right', marginTop: "-2rem", fontSize:"20px" }}>{likes}<img id="reverbIcon" src={ReverbIcon} alt="Click to Like!"/></Button>
+                    style={{ float: 'right', marginTop: "-2rem", fontSize:"20px" }}>{likes}<img id="reverbIcon" src={ReverbIcon} alt="Click to Like!"/>
+                </Button>
                 
                 {canBookmark?
                     <Button data-testid="bookmarkButton" id="bookmarkButton" onClick={addBookmark} variant="warning"
