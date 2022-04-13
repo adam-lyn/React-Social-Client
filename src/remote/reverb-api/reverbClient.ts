@@ -2,7 +2,7 @@ import axios from 'axios';
 import { store } from '../../app/store'
 
 const reverbClient = axios.create( {
-  baseURL: 'https://Reverb-eb-env.eba-havvpanq.us-east-2.elasticbeanstalk.com',
+  baseURL: 'https://reverb-eb-env.eba-havvpanq.us-east-2.elasticbeanstalk.com',
   // baseURL: 'http://localhost:5000',
   headers: {
     'Content-Type': 'application/json'
@@ -10,7 +10,7 @@ const reverbClient = axios.create( {
 } );
 
 const reverbClientWithAuth = axios.create( {
-  baseURL: 'https://Reverb-eb-env.eba-havvpanq.us-east-2.elasticbeanstalk.com',
+  baseURL: 'https://reverb-eb-env.eba-havvpanq.us-east-2.elasticbeanstalk.com',
   // baseURL: 'http://localhost:5000',
 
   headers: {
@@ -22,7 +22,7 @@ const reverbClientWithAuth = axios.create( {
 } );
 
 const reverbClientUploadFileWithAuth = axios.create( {
-    baseURL: 'https://Reverb-eb-env.eba-havvpanq.us-east-2.elasticbeanstalk.com',
+    baseURL: 'https://reverb-eb-env.eba-havvpanq.us-east-2.elasticbeanstalk.com',
     // baseURL: 'http://localhost:5000',
     headers: {
       "Content-Type": "multipart/form-data; boundary=<calculated when request is sent>",

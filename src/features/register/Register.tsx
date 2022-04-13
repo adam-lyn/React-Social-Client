@@ -17,7 +17,7 @@ export default function Register() {
   const registerUser = (token: string) => {
 
 
-  const url = 'https://Reverb-eb-env.eba-havvpanq.us-east-2.elasticbeanstalk.com/api/user/register';
+  const url = 'https://reverb-eb-env.eba-havvpanq.us-east-2.elasticbeanstalk.com/api/user/register';
   // const url = 'http://localhost:5000/api/user/register';
 
     const header = {
