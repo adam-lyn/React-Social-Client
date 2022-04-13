@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Modal } from "react-bootstrap";
-import { getNotificationsByOwner, setNotificationsToRead } from './notification.api';
+import { getNotificationsByOtherUser, setNotificationsToRead } from './notification.api';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectAuth } from '../login/authSlice';
 import { selectUser } from '../login/userSlice';
@@ -27,7 +27,7 @@ const Notifications = ({loggedIn}: {loggedIn: string}) => {
 
   useEffect(() => {
     if (user.id && token) {
-      getNotificationsByOwner(user.id)
+      getNotificationsByOtherUser(user.id)
       .then(res => {
         dispatch(setNotifications(res.data));
       })
@@ -56,9 +56,9 @@ const Notifications = ({loggedIn}: {loggedIn: string}) => {
               notifications.map((notification: any) => (
                 <div id={notification.id}>
                   {notification.type_id.typeName === 'like' ?
-                    (<p>{notification.otherUser.email} liked your post!</p>)
+                    (<p>{notification.owner.email} liked your post!</p>)
                   :
-                    (<p>{notification.otherUser.email} commented on your post!</p>)
+                    (<p>{notification.owner.email} commented on your post!</p>)
                   } 
                 </div>
               ))
