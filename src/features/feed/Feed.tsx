@@ -9,7 +9,7 @@ import { initialComment } from '../comment/comment';
 import RefreshIcon from '../../assets/images/refreshicon.svg'
 import { selectGroup } from '../group/groupSlice';
 import { Post } from "../post/post"
-import { postNotification, getNotificationsByOwner } from "../notification/notification.api";
+import { postNotification, getNotificationsByOtherUser } from "../notification/notification.api";
 import { setNotifications } from '../notification/notificationSlice';
 import { selectUser } from '../login/userSlice';
 
@@ -77,7 +77,7 @@ function Feed({isGroup}: {isGroup: boolean}) {
           );
           console.log(notifRes);
           
-          const res = await getNotificationsByOwner(user.id);
+          const res = await getNotificationsByOtherUser(user.id);
           dispatch(setNotifications(res.data));
 
         } catch (err) {
