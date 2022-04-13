@@ -1,8 +1,8 @@
 import { reverbClientWithAuth } from "../../remote/reverb-api/reverbClient";
 import NotificationRequest from "./NotificationRequest";
 
-export const getNotificationsByOwner = async (ownerId: string) => {
-  const resp = await reverbClientWithAuth.get(`/api/notifications/owner/${ownerId}`);
+export const getNotificationsByOtherUser = async (otherUserId: string) => {
+  const resp = await reverbClientWithAuth.get(`/api/notifications/notified/${otherUserId}`);
 
   return resp;
 }
