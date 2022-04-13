@@ -1,13 +1,17 @@
 import React from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import swal from 'sweetalert';
+import profanityFilter from '../../util/profanityFilter';
 
 function SubmitComment(props: any) {
 
-    function closeSubmit(event: React.MouseEvent<HTMLButtonElement>) {
+    function closeSubmit() {
         if (props.comment.commentText !== "") {
-            props.onHide();
-            props.dispatchComment();
+            if (profanityFilter.filter(props.comment.commentText)) {
+              props.onHide();
+              props.dispatchComment();
+            } else
+                swal("", "Inappropriate content", "error");
         } else {
             swal("", "Your comment cannot be empty!", "error");
         }
