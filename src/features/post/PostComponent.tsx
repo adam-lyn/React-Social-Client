@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../login/userSlice";
 import { setNotifications } from "../notification/notificationSlice";
 import { getProfileByAuthor, getProfileById } from "../profile/profile.api";
-import { postNotification, getNotificationsByOwner } from "../notification/notification.api";
+import { postNotification, getNotificationsByOtherUser } from "../notification/notification.api";
 import { Profile, initialProfile } from "../profile/profile";
 
 const  PostComponent =  ({ author, shouldUpdateLikes, post, leaveComment, shouldUpdateCanBookmark }: 
@@ -63,7 +63,7 @@ const  PostComponent =  ({ author, shouldUpdateLikes, post, leaveComment, should
                     }
                   );
                   
-                  const res = await getNotificationsByOwner(user.id);
+                  const res = await getNotificationsByOtherUser(user.id);
                   dispatch(setNotifications(res.data));
 
                 } catch (err) {
